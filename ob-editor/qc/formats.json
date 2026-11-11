@@ -1,0 +1,549 @@
+{
+ "_about": "ONE place for every number and requirement the editor uses (rebuild 2026-11-10, OB: 'no more mistakes'). The gate (qc_route.py), ob_job.py, the audio pickers, the reviewer checklist and the skill's route files all read this file. Prose may explain a value; it never restates one. Change a value here, with OB's words and the date in its _why.",
+ "version": 1,
+ "enforce": {
+  "_why": "Stage switch. Jobs started with ob_job.py are always strict. Files with no job (older engines, other tabs mid-edit) deliver the old way until legacy_until, then deliver.py refuses them.",
+  "legacy_until": "2026-11-13",
+  "review_required": true,
+  "warn_answers_required": true
+ },
+ "paths": {
+  "_why": "The T7 filled up on 11-06 and again on 11-10. Work never goes there. Deliveries go to the first root with room and the full path is always printed.",
+  "work_roots": [
+   "~/ob-work",
+   "/Volumes/OB-ARCHIVE/OB-EDITS"
+  ],
+  "work_min_free_gb": 40,
+  "scratch": "~/ob-scratch",
+  "never_write_work": [
+   "/Volumes/T7"
+  ],
+  "deliver_roots": [
+   "/Volumes/OB-ARCHIVE/OB-EDITS",
+   "/Volumes/T7/OB-EDITS"
+  ],
+  "deliver_min_free_gb": 15,
+  "deliver_folder": "AIRDROP {what} ({date})",
+  "deliver_folder_long": "UPLOAD {what} ({date})",
+  "music_bank": "~/ob-editor/assets/music",
+  "sfx_banks": [
+   "~/ob-editor/assets/sfx_ob_drive",
+   "~/ob-editor/assets/sfx_tai",
+   "~/ob-editor/assets/sfx_real",
+   "~/ob-editor/assets/sfx_library"
+  ],
+  "sfx_code_kit": "~/ob-editor/assets/sfx",
+  "bank_index": "~/ob-editor/assets/bank_index.json",
+  "jobs": "~/ob-editor/qc/jobs",
+  "runs": "~/ob-editor/qc/runs",
+  "reviews": "~/ob-editor/qc/reviews",
+  "gold": "~/ob-editor/qc/gold.json",
+  "ledger": "~/ob-editor/qc/mistakes.json"
+ },
+ "defaults": {
+  "master": {
+   "lufs": -14.0,
+   "lufs_tol": 1.5,
+   "true_peak_max": -1.0,
+   "short_term_over_integrated_max": 5.0,
+   "_why": "voice_master (M06); short-term cap from EBU R128 s1 (CRAFT-RESEARCH rule 3)"
+  },
+  "voice": {
+   "max_voiceless_s": 0.45,
+   "max_join_s": 0.15,
+   "silence_share_max": 0.03,
+   "silence_longest_s": 0.2,
+   "_why": "OB 10-28 'cut absoleultely all deadspac'; M44 11-03 joins; M48 11-04 voice band"
+  },
+  "music": {
+   "bed_lu_under_voice": 27.0,
+   "bed_tol_lu": 1.5,
+   "min_candidates": 3,
+   "no_reuse_last_edits": 5,
+   "viral_first_margin": 15,
+   "duck_hold_s": 0.5,
+   "duck_release_s": 0.9,
+   "fade_out_s": 0.8,
+   "punch_drop_db": 6.0,
+   "punch_floor_db": -25.0,
+   "edu_tone": "upbeat, bright, confident, major key; never ambient, drone, film score, sneaky or curious jazz, emotional piano, lo-fi chill",
+   "_why": "OB 11-07 'turn the background music down' (27 LU, stem vs stem), 'Education content should be upbeat and higher enegery', 'You always go so depressing', 'You have a bank of so many choices'; M57 never reuse another video's bed; candidates: AUDIT-AUDIO 5B"
+  },
+  "sfx": {
+   "level_db_vs_voice": [
+    -27.0,
+    -17.0
+   ],
+   "first_s_none": 0.5,
+   "min_gap_s": 1.5,
+   "list_tick_gap_s": 0.25,
+   "repeat_max_reel": 2,
+   "repeat_max_long": 3,
+   "back_to_back": false,
+   "min_runner_ups": 2,
+   "sync_early_ms": 33,
+   "sync_late_ms": 67,
+   "banned_families": [
+    "kenney tick",
+    "glitch"
+   ],
+   "_why": "OB 10-16 'have different sound effects and make them a little quieter because it gets so repetitive'; 10-29 'use them when needed dont be obxious'; 11-06 'I also hated that sound effect you used' (Kenney ticks, glitch); 11-07 'use the sound effects from the bank first before making your own always'; sync window ITU-R BT.1359"
+  },
+  "picture": {
+   "zoom_animated": false,
+   "zoom_hard_cut_max_pct": 10,
+   "matte": "birefnet",
+   "spring_damping_min": 0.9,
+   "black_luma_max": 20,
+   "black_share_fail": 0.35,
+   "min_cover_s": 1.5,
+   "freeze_black_max_s": 0.5,
+   "flash_per_s_max": 3,
+   "upscale_max": 1.1,
+   "_why": "OB 11-07 'its zooming in and out non stop'; 'Why is it so fidgety'; 11-06/11-09 cutouts (BiRefNet only); M38 no black backgrounds; M09 no flashes; flash rate ITU-R BT.1702; 11-06 upscaled backgrounds 'glitchy'"
+  },
+  "text": {
+   "safe_top_px": 220,
+   "safe_bottom_px": 420,
+   "ad_safe_top_px": 269,
+   "ad_safe_bottom_px": 672,
+   "ad_safe_side_px": 65,
+   "hook_max_words": 9,
+   "min_text_frames": 25,
+   "font_headline": "Big Shoulders Display Black",
+   "font_caption": "Big Shoulders Display ExtraBold",
+   "key_colour": "#FFD400",
+   "banned_words": [
+    "free",
+    "team"
+   ],
+   "dashes": false,
+   "_why": "M05, M11, M12; brand 'Athletic' picked by OB 10-28 ('these bubble text scream ai editing'); Meta ad safe zone for anything boosted (CRAFT-RESEARCH D3)"
+  },
+  "assets": {
+   "banned_files": [
+    "C1797",
+    "C1798",
+    "C1799",
+    "C1800",
+    "C1801",
+    "C1802"
+   ],
+   "lean_photo": "DSC07329",
+   "consent_excluded": [
+    "Client Y",
+    "Client P"
+   ],
+   "ai_sources": [
+    "stockcake",
+    "midjourney",
+    "dall-e",
+    "dalle",
+    "chatgpt",
+    "openai",
+    "firefly",
+    "ideogram",
+    "leonardo",
+    "freepik.com/ai",
+    "lexica",
+    "playground",
+    "suno",
+    "udio",
+    "elevenlabs"
+   ],
+   "text_only_kinds": [
+    "text",
+    "quote",
+    "list",
+    "pill",
+    "plate",
+    "bullet",
+    "title_card"
+   ],
+   "barbell_terms": [
+    "barbell squat",
+    "back squat",
+    "deadlift"
+   ],
+   "_why": "OB 11-07 'y do you always show me fat asf as toned and shredded'; M21 consent; M22/M28 no AI imagery, voice or music in videos; M16 'you just put text... not even a photo' (7 repeats); M23"
+  },
+  "delivery": {
+   "copies": 1,
+   "phone_copy": false,
+   "_why": "OB 11-03 'just one after editing now'; 11-04 'only 1 is needed'. The voice+SFX stem stays in WORK so the bed can be swapped in a minute."
+  },
+  "records": {
+   "_why": "A pick with one candidate is the fastest route (AUDIT-MISTAKES cause F, 16 repeats). Each record below must exist in WORK and pass before delivery.",
+   "music": "audio/music_candidates.json",
+   "sfx": "story/sfx_plan.json",
+   "assets": "qc/assets.json",
+   "warn_answers": "qc/warn_answers.json",
+   "overrides": "qc/gate_overrides.json",
+   "audio_manifest": "audio/manifest.json",
+   "breakdown": "BREAKDOWN.md",
+   "format_check": "qc/format_check.json",
+   "react_windows": "qc/react_windows.json"
+  },
+  "warn_policy": {
+   "_why": "WARNs went out unread on 427-575 of 630 deliveries. 'answer' = each WARN needs a line in qc/warn_answers.json; 'info' = noise that never blocks.",
+   "size": "info",
+   "words": "answer",
+   "hook": "answer",
+   "captions": "answer",
+   "text_safe": "answer",
+   "sfx": "answer",
+   "bank": "answer",
+   "cues": "answer",
+   "audio": "answer",
+   "motion": "answer",
+   "lipsync": "answer",
+   "default": "answer"
+  }
+ },
+ "routes": {
+  "reel-talking": {
+   "title": "Reel: talking head from raw takes (no template)",
+   "file": "routes/short-form.md",
+   "long": false,
+   "music": "bed",
+   "sfx": "optional",
+   "sfx_per_min": {
+    "cap": 4.0,
+    "fail": 5.0
+   },
+   "required": [
+    "format",
+    "cues",
+    "words",
+    "silence",
+    "edges",
+    "audio",
+    "motion",
+    "text_face",
+    "text_lint",
+    "text_safe",
+    "captions",
+    "lookoff",
+    "lipsync",
+    "clients",
+    "bank"
+   ],
+   "records": [
+    "music",
+    "assets",
+    "warn_answers"
+   ]
+  },
+  "reel-graphics": {
+   "title": "Reel: graphics-led formats on the template engine or the level kit (T13, T14, T16-T24, T26; the GLP level)",
+   "file": "routes/templates.md",
+   "long": false,
+   "music": "bed",
+   "sfx": "plan",
+   "sfx_per_min": {
+    "cap": 18.0,
+    "fail": 23.0,
+    "_why": "GOLD-SET: the GLP level edits OB approved 11-06 ('That's what I'm fucking talking about') run 16-22 sound effects a minute"
+   },
+   "required": [
+    "format",
+    "cues",
+    "words",
+    "silence",
+    "edges",
+    "audio",
+    "motion",
+    "text_face",
+    "text_lint",
+    "text_safe",
+    "captions",
+    "lipsync",
+    "clients",
+    "sfx",
+    "bank"
+   ],
+   "records": [
+    "music",
+    "sfx",
+    "assets",
+    "format_check",
+    "warn_answers"
+   ]
+  },
+  "reel-lists": {
+   "title": "Reel: 10/10 list, Megann plan, 2x2 grid (T07-T09)",
+   "file": "routes/lists.md",
+   "long": false,
+   "music": "bed",
+   "sfx": "optional",
+   "sfx_per_min": {
+    "cap": 4.0,
+    "fail": 5.0
+   },
+   "required": [
+    "format",
+    "cues",
+    "words",
+    "silence",
+    "edges",
+    "audio",
+    "motion",
+    "text_face",
+    "text_lint",
+    "text_safe",
+    "captions",
+    "lipsync",
+    "bank"
+   ],
+   "records": [
+    "music",
+    "assets",
+    "warn_answers"
+   ]
+  },
+  "reel-reaction": {
+   "title": "Reel: reaction to someone's clip (T03, T15, T25, split T04/T05)",
+   "file": "routes/reaction.md",
+   "long": false,
+   "music": "optional",
+   "sfx": "optional",
+   "sfx_per_min": {
+    "cap": 4.0,
+    "fail": 5.0
+   },
+   "original_clip": "whole, untouched; he may only be green-screened over it",
+   "required": [
+    "format",
+    "cues",
+    "edges",
+    "audio",
+    "motion",
+    "text_face",
+    "text_lint",
+    "lipsync",
+    "bank"
+   ],
+   "na": {
+    "hook": "the original clip plays untouched from frame 1 (OB 11-09)",
+    "silence": "the untouched clip keeps its own pauses; his lines are checked by edges and the route's join check"
+   },
+   "records": [
+    "react_windows",
+    "assets",
+    "warn_answers"
+   ]
+  },
+  "reel-fdoe": {
+   "title": "Reel: FDOE audit / breakdown (T01, T02)",
+   "file": "routes/fdoe.md",
+   "long": false,
+   "music": "bed",
+   "sfx": "optional",
+   "sfx_per_min": {
+    "cap": 4.0,
+    "fail": 5.0
+   },
+   "original_clip": "whole, untouched first; then meal by meal with him over it",
+   "required": [
+    "format",
+    "cues",
+    "edges",
+    "audio",
+    "motion",
+    "text_face",
+    "text_lint",
+    "lipsync",
+    "bank"
+   ],
+   "na": {
+    "words": "FDOE audits have no script: numbers only, from his Cronometer (OB 11-09)",
+    "hook": "her clip plays untouched from frame 1 (OB 11-09)"
+   },
+   "records": [
+    "react_windows",
+    "music",
+    "assets",
+    "warn_answers"
+   ]
+  },
+  "reel-lecture": {
+   "title": "Reel: lecture at the TV (T10) and tier list / this-or-that (T11)",
+   "file": "routes/lecture-tier.md",
+   "long": false,
+   "music": "bed",
+   "sfx": "optional",
+   "sfx_per_min": {
+    "cap": 4.0,
+    "fail": 5.0
+   },
+   "required": [
+    "format",
+    "cues",
+    "words",
+    "silence",
+    "edges",
+    "audio",
+    "motion",
+    "text_face",
+    "text_lint",
+    "text_safe",
+    "lipsync",
+    "bank"
+   ],
+   "records": [
+    "music",
+    "assets",
+    "warn_answers"
+   ]
+  },
+  "yt-clips": {
+   "title": "YouTube to Instagram clips (T12)",
+   "file": "routes/yt-clips.md",
+   "long": false,
+   "music": "none",
+   "sfx": "none",
+   "max_s": 90,
+   "required": [
+    "format",
+    "cues",
+    "words",
+    "silence",
+    "edges",
+    "audio",
+    "motion",
+    "text_face",
+    "text_lint",
+    "text_safe",
+    "lipsync"
+   ],
+   "na": {
+    "bank": "no music or sound effects baked in: he adds his sound in the app",
+    "sfx": "none in this format"
+   },
+   "records": [
+    "warn_answers"
+   ]
+  },
+  "repost-trials": {
+   "title": "Trial reposts of a posted winner",
+   "file": "routes/reposts.md",
+   "long": false,
+   "music": "optional",
+   "sfx": "optional",
+   "sfx_per_min": {
+    "cap": 4.0,
+    "fail": 5.0
+   },
+   "required": [
+    "format",
+    "cues",
+    "edges",
+    "audio",
+    "motion",
+    "text_face",
+    "text_lint"
+   ],
+   "records": [
+    "warn_answers"
+   ]
+  },
+  "ad": {
+   "title": "Ads and boosted posts (coaching DM ads, product UGC): scripts and rules live in /ad-maker and /ugc, the cut runs here",
+   "file": "routes/ads.md",
+   "long": false,
+   "music": "optional",
+   "sfx": "optional",
+   "ad": true,
+   "zoom_allowed": "ugc only",
+   "sfx_per_min": {
+    "cap": 4.0,
+    "fail": 5.0
+   },
+   "music_lanes": [
+    "royalty-free"
+   ],
+   "required": [
+    "format",
+    "cues",
+    "words",
+    "silence",
+    "edges",
+    "audio",
+    "motion",
+    "text_face",
+    "text_lint",
+    "text_safe",
+    "captions",
+    "lipsync",
+    "bank"
+   ],
+   "records": [
+    "assets",
+    "warn_answers"
+   ]
+  },
+  "long-form": {
+   "title": "YouTube long form: teaching (Dan Go / Markus style), documentary (Johnny Harris), long reactions",
+   "file": "routes/long-form.md",
+   "long": true,
+   "music": "bed",
+   "sfx": "plan",
+   "sfx_per_min": {
+    "cap": 2.9,
+    "fail": 3.5,
+    "_why": "Johnny Harris 0.6, C4367 2.9 at OB's 'one per clip'"
+   },
+   "music_lanes": [
+    "youtube-safe"
+   ],
+   "required": [
+    "format",
+    "cues",
+    "edges",
+    "audio",
+    "motion",
+    "text_face",
+    "text_lint",
+    "opener",
+    "lookoff",
+    "lipsync",
+    "clients",
+    "sfx",
+    "bank"
+   ],
+   "na": {
+    "silence": "long form keeps its own join rule (route file); measured by the route's join check",
+    "text_safe": "no IG bands on YouTube",
+    "hook": "the opener check covers frame 1"
+   },
+   "records": [
+    "music",
+    "sfx",
+    "assets",
+    "breakdown",
+    "warn_answers"
+   ]
+  },
+  "mock": {
+   "title": "Mock, preview or test clip (never delivered as a final)",
+   "file": "subjects/qc.md",
+   "long": false,
+   "music": "optional",
+   "sfx": "optional",
+   "mock": true,
+   "sfx_per_min": {
+    "cap": 18.0,
+    "fail": 23.0
+   },
+   "required": [
+    "format",
+    "cues",
+    "edges",
+    "audio",
+    "text_face",
+    "text_lint"
+   ],
+   "records": []
+  }
+ }
+}

@@ -1,0 +1,167 @@
+{
+ "click_1.wav": {
+  "source": "anderson-tai-top5-sfx/click.wav",
+  "fold": "L",
+  "semitones": -0.0,
+  "dur_s": 0.17,
+  "peak_s": 0.072,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -27.1,
+  "why": "very bright UI click, about 0.1 s",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "click_2.wav": {
+  "source": "anderson-tai-top5-sfx/click.wav",
+  "fold": "L",
+  "semitones": -0.99,
+  "dur_s": 0.17,
+  "peak_s": 0.076,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -27.4,
+  "why": "very bright UI click, about 0.1 s",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "click_3.wav": {
+  "source": "anderson-tai-top5-sfx/click.wav",
+  "fold": "L",
+  "semitones": 0.99,
+  "dur_s": 0.16,
+  "peak_s": 0.069,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -26.7,
+  "why": "very bright UI click, about 0.1 s",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "flash_1.wav": {
+  "source": "anderson-tai-top5-sfx/camera_flash.mp3",
+  "fold": "mid",
+  "semitones": -0.0,
+  "dur_s": 0.56,
+  "peak_s": 0.271,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -15.2,
+  "why": "camera-flash burst, loudest 0.25-0.40 s in",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "flash_2.wav": {
+  "source": "anderson-tai-top5-sfx/camera_flash.mp3",
+  "fold": "mid",
+  "semitones": -0.99,
+  "dur_s": 0.63,
+  "peak_s": 0.286,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -14.5,
+  "why": "camera-flash burst, loudest 0.25-0.40 s in",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "flash_3.wav": {
+  "source": "anderson-tai-top5-sfx/camera_flash.mp3",
+  "fold": "mid",
+  "semitones": 0.99,
+  "dur_s": 0.54,
+  "peak_s": 0.256,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -14.8,
+  "why": "camera-flash burst, loudest 0.25-0.40 s in",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "whoosh_1.wav": {
+  "source": "anderson-tai-top5-sfx/whoosh.wav",
+  "fold": "mid",
+  "semitones": -0.0,
+  "dur_s": 2.36,
+  "peak_s": 0.866,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -13.8,
+  "why": "real recorded whoosh, swells to 0.9 s then a long tail",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "whoosh_2.wav": {
+  "source": "anderson-tai-top5-sfx/whoosh.wav",
+  "fold": "mid",
+  "semitones": -0.99,
+  "dur_s": 2.69,
+  "peak_s": 0.916,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -13.9,
+  "why": "real recorded whoosh, swells to 0.9 s then a long tail",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "whoosh_3.wav": {
+  "source": "anderson-tai-top5-sfx/whoosh.wav",
+  "fold": "mid",
+  "semitones": 0.99,
+  "dur_s": 2.5,
+  "peak_s": 0.818,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -14.3,
+  "why": "real recorded whoosh, swells to 0.9 s then a long tail",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "glitch_1.wav": {
+  "source": "anderson-tai-top5-sfx/glitch.wav",
+  "fold": "L",
+  "semitones": -0.0,
+  "dur_s": 0.74,
+  "peak_s": 0.265,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -18.2,
+  "why": "bright digital glitch, 0.4 s plus a short tail",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "glitch_2.wav": {
+  "source": "anderson-tai-top5-sfx/glitch.wav",
+  "fold": "L",
+  "semitones": -0.99,
+  "dur_s": 0.75,
+  "peak_s": 0.281,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -17.7,
+  "why": "bright digital glitch, 0.4 s plus a short tail",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "glitch_3.wav": {
+  "source": "anderson-tai-top5-sfx/glitch.wav",
+  "fold": "L",
+  "semitones": 0.99,
+  "dur_s": 0.7,
+  "peak_s": 0.25,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -17.6,
+  "why": "bright digital glitch, 0.4 s plus a short tail",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "riser_1.wav": {
+  "source": "anderson-tai-top5-sfx/riser.wav",
+  "fold": "R",
+  "semitones": -0.0,
+  "dur_s": 1.7,
+  "peak_s": 1.593,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -14.7,
+  "why": "builds for about 1.7 s and stops dead at the top",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "riser_2.wav": {
+  "source": "anderson-tai-top5-sfx/riser.wav",
+  "fold": "R",
+  "semitones": -0.99,
+  "dur_s": 1.8,
+  "peak_s": 1.688,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -14.2,
+  "why": "builds for about 1.7 s and stops dead at the top",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ },
+ "riser_3.wav": {
+  "source": "anderson-tai-top5-sfx/riser.wav",
+  "fold": "R",
+  "semitones": 0.99,
+  "dur_s": 1.61,
+  "peak_s": 1.507,
+  "peak_dbfs": -6.0,
+  "rms100_dbfs": -15.1,
+  "why": "builds for about 1.7 s and stops dead at the top",
+  "licence": "none given (free giveaway pack): organic and trial reels only, never ads or boosted posts"
+ }
+}

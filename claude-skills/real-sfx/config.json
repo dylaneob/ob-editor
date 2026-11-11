@@ -1,0 +1,32 @@
+{
+  "libraries": [
+    {
+      "name": "ob-kenney",
+      "path": "/Users/YOU/ob-editor/assets/sfx_real",
+      "tier": "main"
+    },
+    {
+      "name": "ob-tai",
+      "path": "/Users/YOU/ob-editor/assets/sfx_tai",
+      "tier": "main"
+    },
+    {
+      "name": "openverse",
+      "path": "/Volumes/T7/OB-EDITS/sfx-library/openverse",
+      "tier": "extra"
+    },
+    {
+      "name": "ob-drive",
+      "path": "/Users/YOU/ob-editor/assets/sfx_ob_drive",
+      "tier": "main"
+    }
+  ],
+  "uisfx": {
+    "path": "vendor/node_modules/uisfx",
+    "default_pack": "studio"
+  },
+  "skip_dir_names": [
+    "_mister horse previews"
+  ],
+  "index_path": "library_index.json"
+}

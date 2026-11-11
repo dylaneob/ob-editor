@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ob-moments: Clip Review Dashboard</title>
+<style>
+:root{
+  --bg:#0b0e14; --panel:#151a23; --panel2:#1c222e; --line:#2a3140;
+  --txt:#e7ecf3; --mut:#8b97a8; --mut2:#637085;
+  --good:#2ecc71; --bad:#ff5d6c; --warn:#ffb547; --accent:#5b8def;
+  --r:12px; --gap:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.45;padding-bottom:90px}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+a{color:var(--accent)}
+
+/* header */
+header{background:linear-gradient(135deg,#11151d,#171d28);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-bottom:var(--gap)}
+h1{font-size:18px;font-weight:700;letter-spacing:.2px}
+h1 .sub{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:3px}
+.ep-select{margin-top:14px;width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);font-size:13.5px;font-weight:600}
+.ep-meta{font-size:11.5px;color:var(--mut);margin-top:8px}
+.ep-meta b{color:var(--txt)}
+
+/* rendered-clips players */
+.clips-row{margin:14px 0 18px}
+.clips-head{margin:0 0 10px;font-size:14px;color:var(--accent, #7aa2f7);text-transform:uppercase;letter-spacing:.06em}
+.clips-grid{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px}
+.clipbox{margin:0;flex:0 0 auto;width:200px}
+.clipbox video{width:200px;aspect-ratio:9/16;border-radius:10px;background:#000;border:1px solid var(--line,#2a3140)}
+.clipbox figcaption{font-size:11px;color:#8a93a5;margin-top:4px;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clipbox figcaption.clip-meta{color:var(--mut2);font-size:10.5px;margin-top:2px}
+/* horizontal (16:9) clips render wider + shorter than the default 9:16 box */
+.clipbox.h{width:340px}
+.clipbox.h video{width:340px;aspect-ratio:16/9}
+.clipbox.h figcaption{max-width:340px}
+.orient-tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.04em;color:var(--mut2);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:5px;vertical-align:middle}
+/* cards */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:14px;position:relative}
+.card.approved{border-color:var(--good);box-shadow:0 0 0 1px var(--good)}
+.chead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+.chead-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rank{font-size:12px;font-weight:700;color:var(--mut);background:var(--panel2);border:1px solid var(--line);border-radius:20px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.score{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.score.good{background:#2ecc7122;color:var(--good);border:1px solid #2ecc7155}
+.score.amber{background:#ffb54722;color:var(--warn);border:1px solid #ffb54755}
+.score.grey{background:#8b97a822;color:var(--mut);border:1px solid #8b97a855}
+.meta-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:6px;background:var(--panel2);border:1px solid var(--line);color:var(--mut);white-space:nowrap}
+.chip.lever{color:var(--accent);border-color:#5b8def55}
+.chip.buyer{color:var(--good);border-color:#2ecc7155}
+.chip.archetype{color:var(--warn);border-color:#ffb54755}
+.chip.dur{color:var(--mut)}
+
+.onhook{font-size:19px;font-weight:800;line-height:1.3;color:#fff;margin-bottom:6px}
+.hookline{font-size:12.5px;color:var(--mut);margin-bottom:10px;line-height:1.4}
+.quotable{font-size:12.5px;color:var(--txt);background:#5b8def0d;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:8px 11px;margin-bottom:12px;font-style:italic}
+.quotable.empty{display:none}
+
+.music-box{font-size:12px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:10px}
+.music-box .mv{font-weight:700;color:#fff;margin-bottom:4px}
+.music-box .lane{color:var(--mut);margin-top:3px;line-height:1.4}
+.music-box .lane b{color:var(--txt)}
+
+.section{margin-bottom:8px}
+.section-toggle{width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:var(--txt);font-size:12.5px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.section-toggle:hover{background:#232a38}
+.section-toggle .arrow{color:var(--mut);font-size:11px;transition:transform .15s}
+.section-toggle.open .arrow{transform:rotate(90deg)}
+.section-body{display:none;background:var(--panel2);border:1px solid var(--line);border-top:0;border-radius:0 0 8px 8px;padding:12px;font-size:12.5px;line-height:1.55;color:var(--txt);white-space:pre-wrap}
+.section-body.open{display:block}
+.copy-btn{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:6px;border:1px solid var(--accent);background:#5b8def18;color:var(--accent);cursor:pointer;margin-top:8px}
+.copy-btn:hover{background:#5b8def30}
+.copy-btn.done{border-color:var(--good);background:#2ecc7118;color:var(--good)}
+
+.cfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.approve-btn{flex:1;padding:11px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--mut);font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
+.approve-btn:hover{border-color:var(--good)}
+.approve-btn.on{background:linear-gradient(135deg,#16a34a,#2ecc71);color:#fff;border-color:transparent}
+.cmd-btn{padding:11px 14px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--mut);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.cmd-btn:hover{color:var(--txt);border-color:var(--accent)}
+
+.no-gate{font-size:12px;color:var(--mut);padding:20px;text-align:center}
+
+/* sticky footer */
+.sticky-footer{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#11151d,#171d28);border-top:1px solid var(--line);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:50}
+.sf-count{font-size:13px;font-weight:700;color:var(--txt)}
+.sf-count .n{color:var(--good);font-size:16px}
+.sf-copy{padding:10px 18px;border-radius:8px;border:none;background:linear-gradient(135deg,#16a34a,#2ecc71);color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.sf-copy:hover{opacity:.92}
+.sf-copy:disabled{opacity:.4;cursor:not-allowed}
+.sf-copy.done{background:linear-gradient(135deg,#3b5bdb,#5b8def)}
+
+@media (max-width:480px){
+  .wrap{padding:10px}
+  .card{padding:12px}
+  .onhook{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>ob-moments
+      <span class="sub">Clip review dashboard: score, approve, render</span>
+    </h1>
+    <select class="ep-select" id="epSelect"></select>
+    <div class="ep-meta" id="epMeta"></div>
+  </header>
+
+  <div id="cards"></div>
+</div>
+
+<div class="sticky-footer">
+  <div class="sf-count"><span class="n" id="approvedCount">0</span> approved</div>
+  <button class="sf-copy" id="copyAllBtn">Copy render commands</button>
+</div>
+
+<script>
+const DATA = __OB_MOMENTS_DATA__;
+
+const STORAGE_KEY = "ob_moments_approved_v1";
+const EPISODE_STORAGE_KEY = "ob_moments_last_episode_v1";
+
+function loadLastEpisode(){
+  try{ return localStorage.getItem(EPISODE_STORAGE_KEY) || null; }catch(e){ return null; }
+}
+function saveLastEpisode(videoId){
+  try{ localStorage.setItem(EPISODE_STORAGE_KEY, videoId); }catch(e){ /* ignore */ }
+}
+
+function fmtDate(epochSec){
+  if (!epochSec) return "";
+  const d = new Date(epochSec * 1000);
+  return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+}
+
+function fmtDuration(sec){
+  if (sec == null) return "";
+  sec = Math.round(sec);
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return m > 0 ? (m + ":" + String(s).padStart(2, "0")) : (s + "s");
+}
+
+function loadApproved(){
+  try{
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+  }catch(e){ return {}; }
+}
+function saveApproved(state){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+let approved = loadApproved();
+
+function fmtTime(sec){
+  sec = Math.round(sec || 0);
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return m + ":" + String(s).padStart(2, "0");
+}
+
+function scoreClass(score){
+  if (score >= 55) return "good";
+  if (score >= 45) return "amber";
+  return "grey";
+}
+
+function slugify(str){
+  return (str || "clip")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+    .slice(0, 60) || "clip";
+}
+
+function escDouble(str){
+  return (str || "").replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+}
+
+function firstWords(str, n){
+  return (str || "").trim().split(/\s+/).slice(0, n).join(" ");
+}
+function lastWords(str, n){
+  const parts = (str || "").trim().split(/\s+/);
+  return parts.slice(Math.max(0, parts.length - n)).join(" ");
+}
+
+function momentKey(videoId, momentId){
+  return videoId + "::" + momentId;
+}
+
+function buildRenderCommand(videoId, m){
+  const videoPath = "~/ob-moments/work/" + videoId + ".mp4";
+  const slug = slugify(m.onscreen_hook || m.hook_line || m.title);
+  const outPath = "~/ob-clipper/out/approved/" + slug + ".mp4";
+  const headline = escDouble(m.onscreen_hook || m.hook_line || "");
+  const expectFirst = escDouble(firstWords(m.hook_line || "", 5));
+  const expectLast = escDouble(lastWords(m.text || "", 5));
+
+  return [
+    "python3 ~/ob-clipper/bin/render_clip.py",
+    "--video " + videoPath,
+    "--start " + m.start,
+    "--end " + m.end,
+    '--out ' + outPath,
+    '--headline "' + headline + '"',
+    "--cover-source-captions",
+    '--expect-first "' + expectFirst + '"',
+    '--expect-last "' + expectLast + '"'
+  ].join(" ");
+}
+
+function copyToClipboard(text, btn, doneLabel){
+  navigator.clipboard.writeText(text).then(() => {
+    if (btn){
+      const orig = btn.textContent;
+      btn.textContent = doneLabel || "Copied";
+      btn.classList.add("done");
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove("done");
+      }, 1600);
+    }
+  });
+}
+
+function renderMusicBox(music){
+  if (!music || !music.vibe) return "";
+  const laneA = music.lane_a || {};
+  const laneB = music.lane_b || {};
+  let html = '<div class="music-box">';
+  html += '<div class="mv">Music vibe: ' + escapeHtml(music.vibe) + '</div>';
+  if (laneA.style){
+    html += '<div class="lane"><b>Lane A (burned-in):</b> ' + escapeHtml(laneA.style) + '</div>';
+  }
+  if (laneB.trend){
+    html += '<div class="lane"><b>Lane B (in-app):</b> ' + escapeHtml(laneB.trend) + '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function escapeHtml(str){
+  const div = document.createElement("div");
+  div.textContent = str == null ? "" : String(str);
+  return div.innerHTML;
+}
+
+function buildCard(videoId, m){
+  const key = momentKey(videoId, m.id);
+  const isApproved = !!approved[key];
+  const sc = scoreClass(m.score);
+
+  const card = document.createElement("div");
+  card.className = "card" + (isApproved ? " approved" : "");
+  card.dataset.key = key;
+
+  const onHook = m.onscreen_hook || m.hook_line || m.title || "";
+  const durRange = fmtTime(m.start) + "–" + fmtTime(m.end);
+
+  let metaChips = "";
+  metaChips += '<span class="chip dur">' + Math.round(m.dur) + 's · ' + durRange + '</span>';
+  if (m.engagement_lever){
+    metaChips += '<span class="chip lever">' + escapeHtml(m.engagement_lever) + '</span>';
+  }
+  if (m.buyer_relevance){
+    metaChips += '<span class="chip buyer">' + escapeHtml(m.buyer_relevance) + '</span>';
+  }
+  if (m.hook_archetype){
+    metaChips += '<span class="chip archetype">' + escapeHtml(m.hook_archetype) + '</span>';
+  }
+
+  let html = "";
+  html += '<div class="chead">';
+  html += '  <div class="chead-left">';
+  html += '    <span class="rank">#' + m.rank + '</span>';
+  html += '    <span class="score ' + sc + '">' + Math.round(m.score) + '</span>';
+  html += '  </div>';
+  html += '</div>';
+  html += '<div class="meta-row">' + metaChips + '</div>';
+  html += '<div class="onhook">' + escapeHtml(onHook) + '</div>';
+  html += '<div class="hookline">' + escapeHtml(m.hook_line || "") + '</div>';
+
+  if (m.quotable_line){
+    html += '<div class="quotable">“' + escapeHtml(m.quotable_line) + '”</div>';
+  }
+
+  html += renderMusicBox(m.music);
+
+  // IG caption section
+  const igPost = m.ig_post || {};
+  if (igPost.caption){
+    html += '<div class="section">';
+    html += '  <button class="section-toggle" data-target="ig-' + key + '">IG caption <span class="arrow">▸</span></button>';
+    html += '  <div class="section-body" id="ig-' + key + '">';
+    html += escapeHtml(igPost.caption);
+    if (igPost.posting_window && igPost.posting_window.primary){
+      html += '\n\nPosting window: ' + escapeHtml(igPost.posting_window.primary);
+    }
+    html += '    <div><button class="copy-btn" data-copy-ig="' + key + '">Copy caption</button></div>';
+    html += '  </div>';
+    html += '</div>';
+  }
+
+  // Advice section
+  if (m.advice){
+    html += '<div class="section">';
+    html += '  <button class="section-toggle" data-target="advice-' + key + '">Clip advice <span class="arrow">▸</span></button>';
+    html += '  <div class="section-body" id="advice-' + key + '">' + escapeHtml(m.advice) + '</div>';
+    html += '</div>';
+  }
+
+  html += '<div class="cfoot">';
+  html += '  <button class="approve-btn ' + (isApproved ? "on" : "") + '" data-approve="' + key + '">' + (isApproved ? "✓ Approved" : "Approve") + '</button>';
+  html += '  <button class="cmd-btn" data-cmd="' + key + '">Copy cmd</button>';
+  html += '</div>';
+
+  card.innerHTML = html;
+  return card;
+}
+
+function renderEpisode(videoId){
+  const ep = DATA.episodes.find(e => e.video_id === videoId);
+  const cardsEl = document.getElementById("cards");
+  cardsEl.innerHTML = "";
+
+  const metaEl = document.getElementById("epMeta");
+  if (!ep){
+    metaEl.textContent = "";
+    return;
+  }
+  metaEl.innerHTML = '<b>' + ep.gate_passed_count + '</b> of ' + ep.total_moments + ' moments passed the gate';
+
+  // WATCH: finished renders for this episode, playable inline (served via the
+  // app/clips symlink to ~/ob-clipper/out; requires the local server, not file://)
+  if (ep.rendered_clips && ep.rendered_clips.length){
+    const wrap = document.createElement('div');
+    wrap.className = 'clips-row';
+    wrap.innerHTML = '<h3 class="clips-head">Watch rendered clips (' + ep.rendered_clips.length + ')</h3>' +
+      '<div class="clips-grid">' + ep.rendered_clips.map(c => {
+        const meta = [fmtDate(c.mtime), fmtDuration(c.duration)].filter(Boolean).join(' · ');
+        const isH = c.orientation === 'horizontal';
+        const tag = '<span class="orient-tag">' + (isH ? 'H' : 'V') + '</span>';
+        return '<figure class="clipbox' + (isH ? ' h' : '') + '"><video controls preload="metadata" src="' + c.src + '"></video>' +
+          '<figcaption>' + escapeHtml(c.name.replace(/^clip_\d+_/, '').replace(/_h\.mp4$/, '').replace(/\.mp4$/, '').replace(/-/g, ' ')) + tag + '</figcaption>' +
+          (meta ? '<figcaption class="clip-meta">' + escapeHtml(meta) + '</figcaption>' : '') +
+          '</figure>';
+      }).join('') + '</div>';
+    cardsEl.appendChild(wrap);
+  }
+
+  if (!ep.moments.length){
+    cardsEl.innerHTML = '<div class="no-gate">No gate-passed moments for this episode.</div>';
+    return;
+  }
+
+  ep.moments.forEach(m => {
+    cardsEl.appendChild(buildCard(videoId, m));
+  });
+
+  updateApprovedCount();
+}
+
+function currentEpisodeId(){
+  return document.getElementById("epSelect").value;
+}
+
+function findMoment(videoId, momentId){
+  const ep = DATA.episodes.find(e => e.video_id === videoId);
+  if (!ep) return null;
+  return ep.moments.find(m => String(m.id) === String(momentId));
+}
+
+function updateApprovedCount(){
+  document.getElementById("approvedCount").textContent = Object.keys(approved).filter(k => approved[k]).length;
+}
+
+function init(){
+  const select = document.getElementById("epSelect");
+  DATA.episodes.forEach(ep => {
+    const opt = document.createElement("option");
+    opt.value = ep.video_id;
+    opt.textContent = ep.title + " (" + ep.gate_passed_count + ")";
+    select.appendChild(opt);
+  });
+
+  select.addEventListener("change", () => {
+    const videoId = currentEpisodeId();
+    saveLastEpisode(videoId);
+    renderEpisode(videoId);
+  });
+
+  if (DATA.episodes.length){
+    let initialId = null;
+    const lastId = loadLastEpisode();
+    if (lastId && DATA.episodes.some(e => e.video_id === lastId)){
+      initialId = lastId;
+    } else {
+      // default to the episode with the newest rendered clip
+      let best = null;
+      DATA.episodes.forEach(ep => {
+        if (ep.last_rendered_at && (!best || ep.last_rendered_at > best.last_rendered_at)){
+          best = ep;
+        }
+      });
+      initialId = best ? best.video_id : DATA.episodes[0].video_id;
+    }
+    select.value = initialId;
+    renderEpisode(initialId);
+  }
+
+  document.getElementById("cards").addEventListener("click", (e) => {
+    const toggle = e.target.closest(".section-toggle");
+    if (toggle){
+      const targetId = toggle.dataset.target;
+      const body = document.getElementById(targetId);
+      const isOpen = body.classList.toggle("open");
+      toggle.classList.toggle("open", isOpen);
+      return;
+    }
+
+    const approveBtn = e.target.closest("[data-approve]");
+    if (approveBtn){
+      const key = approveBtn.dataset.approve;
+      approved[key] = !approved[key];
+      saveApproved(approved);
+      approveBtn.classList.toggle("on", approved[key]);
+      approveBtn.textContent = approved[key] ? "✓ Approved" : "Approve";
+      approveBtn.closest(".card").classList.toggle("approved", approved[key]);
+      updateApprovedCount();
+      return;
+    }
+
+    const copyIgBtn = e.target.closest("[data-copy-ig]");
+    if (copyIgBtn){
+      const key = copyIgBtn.dataset.copyIg;
+      const [videoId, momentId] = key.split("::");
+      const m = findMoment(videoId, momentId);
+      if (m && m.ig_post && m.ig_post.caption){
+        copyToClipboard(m.ig_post.caption, copyIgBtn, "Copied");
+      }
+      return;
+    }
+
+    const cmdBtn = e.target.closest("[data-cmd]");
+    if (cmdBtn){
+      const key = cmdBtn.dataset.cmd;
+      const [videoId, momentId] = key.split("::");
+      const m = findMoment(videoId, momentId);
+      if (m){
+        copyToClipboard(buildRenderCommand(videoId, m), cmdBtn, "Copied");
+      }
+      return;
+    }
+  });
+
+  document.getElementById("copyAllBtn").addEventListener("click", (e) => {
+    const btn = e.target;
+    const cmds = [];
+    DATA.episodes.forEach(ep => {
+      ep.moments.forEach(m => {
+        const key = momentKey(ep.video_id, m.id);
+        if (approved[key]){
+          cmds.push(buildRenderCommand(ep.video_id, m));
+        }
+      });
+    });
+    if (!cmds.length){
+      return;
+    }
+    copyToClipboard(cmds.join("\n\n"), btn, "Copied " + cmds.length);
+  });
+}
+
+init();
+</script>
+</body>
+</html>

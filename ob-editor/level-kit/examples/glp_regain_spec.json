@@ -1,0 +1,36 @@
+{
+ "out": "/private/tmp/claude-501/-Users-YOU/fc9372ce-cc7d-433e-8cbd-d868474efc17/scratchpad/full/work/regain",
+ "w": 1242,
+ "h": 920,
+ "secs": 5.65,
+ "samples": 64,
+ "mode": "fill",
+ "ht": 1.8,
+ "bw": 1.6,
+ "bd": 1.0,
+ "t_fill0": 0.25,
+ "t_land": 1.15,
+ "fill_damp": 0.78,
+ "t_pulse": 2.51,
+ "blocks": [
+  {
+   "key": "regain",
+   "share": 0.6,
+   "x": 0.0,
+   "ghost_label": "WEIGHT LOST",
+   "fill_label": "REGAINED",
+   "num_size": 0.52,
+   "fill_label_size": 0.14,
+   "ghost_label_size": 0.17
+  }
+ ],
+ "cam": {
+  "lens": 50,
+  "dist": 7.0,
+  "dist_end": 6.7,
+  "height": 1.5,
+  "target_z": 0.62,
+  "orbit_deg": 5.0
+ },
+ "_source": "Budini et al., eClinicalMedicine 2026, PMID 41938838 (abstract loaded 2026-11-06): at 1 year post-cessation, 60% of the weight lost during treatment was regained (6 RCTs, 3,236 participants)."
+}

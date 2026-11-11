@@ -1,0 +1,28 @@
+#!/bin/zsh
+# earshot 0.4.0 (Leon Lin, MIT, github.com/Leonxlnx/earshot), installed by hand 2026-11-01 from the reviewed tarball
+# (~/ob-editor/vendor/earshot-v0.4.0.tar.gz, sha256 c286b454...). OB: "download this to our editor skill long form and short".
+# It lets the editor pick a sound by ear-proxy (describe, match, rank, find) and synthesize one in code when nothing fits (forge).
+# Guard rails from the 11-01 security read:
+#   - no Google keys in its environment, ever: the Gemini critique (an upload of the audio) can't fire;
+#   - offline after the one-time pinned model download (~1.1 GB from Hugging Face, `earshot-install` did it);
+#   - never `fit --forge FILE.py` (runs a .py file) and never `llm` / `--yes-upload` / `consent`;
+#   - `forge` always with --no-bank (it would write seeds into the installed package);
+#   - not registered as an MCP server (its tools write anywhere the agent says): CLI only, through this wrapper.
+V=$HOME/ob-editor/venvs/earshot/bin/earshot
+[ -x "$V" ] || { echo "earshot is not installed yet (see ~/ob-editor/bin/install_sfx_tools.sh)" >&2; exit 2; }
+for a in "$@"; do
+  case "$a" in
+    --yes-upload|--consent*|--forge) echo "earshot wrapper: '$a' is blocked (uploads or running .py files)" >&2; exit 2;;
+  esac
+done
+case "$1" in
+  llm|critique-llm) echo "earshot wrapper: the Gemini critique is blocked (it uploads audio)" >&2; exit 2;;
+  mcp) echo "earshot wrapper: the MCP server is not used here (its tools write anywhere)" >&2; exit 2;;
+esac
+nobank=1
+for a in "$@"; do [ "$a" = "--no-bank" ] && nobank=0; done
+extra=()
+if [ "$1" = "forge" ] && [ $nobank = 1 ]; then extra=(--no-bank); fi
+exec env -u GEMINI_API_KEY -u GOOGLE_API_KEY \
+  EARSHOT_HOME="$HOME/ob-editor/earshot-home" EARSHOT_OFFLINE="${EARSHOT_OFFLINE:-1}" EARSHOT_THREADS="${EARSHOT_THREADS:-3}" \
+  "$V" "$@" "${extra[@]}"

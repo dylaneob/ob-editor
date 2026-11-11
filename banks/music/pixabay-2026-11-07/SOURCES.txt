@@ -1,0 +1,8 @@
+Pixabay music downloaded 2026-11-07 for the Ozempic reaction v3 (OB: "Yes do whatever needed" to 3 human-made beds, about 3-6 MB each).
+License: Pixabay Content License (https://pixabay.com/service/license-summary/): free commercial use, no attribution required.
+Each page checked the same day: no "AI generated" label (QC rule M30). Re-check before a track becomes a series' signature music.
+
+file | title | artist | duration | Pixabay page
+pizzicato-flow/vitmatnotes-pizzicato-flow-558613.mp3 | Pizzicato Flow | VitMatNotes | 1:28 | https://pixabay.com/music/cartoons-pizzicato-flow-558613/
+sneaky-curious-jazzy/sonican-sneaky-curious-jazzy-506460.mp3 | Sneaky Curious Jazzy | Sonican | 1:35 | https://pixabay.com/music/traditional-jazz-sneaky-curious-jazzy-506460/
+spice-intrigue/romansenykmusic-spice-intrigue-334566.mp3 | Spice Intrigue | RomanSenykMusic | 2:12 | https://pixabay.com/music/comedy-spice-intrigue-334566/

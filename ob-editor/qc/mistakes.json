@@ -1,0 +1,1352 @@
+{
+ "about": "Every editing mistake OB has flagged, in his words, with the rule and the check that now catches it. qc_gate.py reads this. A new note from OB = a new entry + a check (or a manual line) + a planted fixture in regress/ that fails without the fix (the loop: SKILL.md 'QC gate and the never-again loop'). | 11-10 rebuild: each rule has status/routes/enforcer (ledger.py); qc_gate --rules and ob_job.py rules print active ones.",
+ "mistakes": [
+  {
+   "id": "M01",
+   "date": "2026-10-28",
+   "said": "you either cut me off mid sentence or have me looking off and keep way too much after i finish, short form needs to be fast pace, not speed it up but just cut absoleultely all deadspac",
+   "rule": "Zero dead space by cuts, never tempo: silence 3% or less, none over 0.2 s (takes.py + zero_dead.cut_words).",
+   "check": "silence",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:silence"
+   ]
+  },
+  {
+   "id": "M02",
+   "date": "2026-10-25",
+   "said": "you cut me off mid word ... You cut me off saying legit for the diet ... Never do that shit again",
+   "rule": "Every scripted word is heard in the render (word-level whisper vs script); cut edges come from word cores, never a loudness gate.",
+   "check": "words",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:words",
+    "review:R23"
+   ]
+  },
+  {
+   "id": "M03",
+   "date": "2026-10-25",
+   "said": "you don't take out bad takes",
+   "rule": "Last clean take only (takes.py); no 'cut that, Claude' in any render.",
+   "check": "cues",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:cues",
+    "review:R23"
+   ]
+  },
+  {
+   "id": "M04",
+   "date": "2026-10-19",
+   "said": "if i look away cut it (10-28: have me looking off)",
+   "rule": "No cut edge on him looking down or away (zero_dead.py lookoff, 3 frames per edge).",
+   "check": "lookoff",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:lookoff"
+   ]
+  },
+  {
+   "id": "M05",
+   "date": "2026-10-25",
+   "said": "why tf are you covering my face with text",
+   "rule": "No title, caption, label or graphic over his face.",
+   "check": "text_face",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:text_face",
+    "review:R01"
+   ]
+  },
+  {
+   "id": "M06",
+   "date": "2026-10-28",
+   "said": "sometimes you make the audio sound bad quality when im legit using a podcast external mic ... only make it sound better not worse",
+   "rule": "voice_master.py: no hard clip, true peak -1 dBTP or lower, about -14 LUFS, from the MOTIV 48 kHz file.",
+   "check": "audio",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:audio",
+    "review:R25"
+   ]
+  },
+  {
+   "id": "M07",
+   "date": "2026-10-20",
+   "said": "why is the quality so shit now, i shot it in 4k",
+   "rule": "VMAF 93+ mean against the source when there is one; 1080x1920 at a healthy bitrate.",
+   "check": "vmaf",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:vmaf"
+   ]
+  },
+  {
+   "id": "M08",
+   "date": "2026-10-21",
+   "said": "you last time put it in a square rather than a normal frame like my others",
+   "rule": "Short form is 1080x1920, 9:16, always.",
+   "check": "format",
+   "status": "active",
+   "routes": [
+    "reel-talking",
+    "reel-graphics",
+    "reel-lists",
+    "reel-reaction",
+    "reel-fdoe",
+    "reel-lecture",
+    "yt-clips",
+    "repost-trials",
+    "ad",
+    "mock"
+   ],
+   "enforcer": [
+    "gate:format",
+    "review:R28"
+   ]
+  },
+  {
+   "id": "M09",
+   "date": "2026-10-20",
+   "said": "too many overlays like showing the clip and me talking just looked glitchy",
+   "rule": "No one-frame flashes in the render (motion_score); no covers under 1.5 s (flicker_check on long-form plans).",
+   "check": "motion",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:motion",
+    "review:R16"
+   ]
+  },
+  {
+   "id": "M10",
+   "date": "2026-10-24",
+   "said": "hooks: skip data first (frame 1)",
+   "rule": "Hook text on frame 1, 9 words or fewer, something moving by 1.5 s.",
+   "check": "hook",
+   "status": "active",
+   "routes": [
+    "reel-talking",
+    "reel-graphics",
+    "reel-lists",
+    "reel-reaction",
+    "reel-fdoe",
+    "reel-lecture",
+    "yt-clips",
+    "repost-trials",
+    "ad",
+    "mock"
+   ],
+   "enforcer": [
+    "gate:hook",
+    "review:R04"
+   ]
+  },
+  {
+   "id": "M11",
+   "date": "2026-06-02",
+   "said": "strip the AI giveaways (em dashes); no 'free' (sales copy); 2026-10-14: never 'team' in organic",
+   "rule": "On-screen text: no em or en dashes, no '~' (OCR and a fast viewer read it as a dash; write 'about': C4398 v2 '~2028' failed the gate 10-30), no 'free', no 'team' in text we write (a caption of OB saying 'team' himself is fine, OB 11-07; the gate only WARNs).",
+   "check": "text_lint",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:text_lint",
+    "review:R12"
+   ]
+  },
+  {
+   "id": "M12",
+   "date": "2026-10-16",
+   "said": "IG UI covers the top and bottom",
+   "rule": "Text out of the top 220 px and bottom 420 px (1920 tall).",
+   "check": "text_safe",
+   "status": "active",
+   "routes": [
+    "reel-talking",
+    "reel-graphics",
+    "reel-lists",
+    "reel-reaction",
+    "reel-fdoe",
+    "reel-lecture",
+    "yt-clips",
+    "repost-trials",
+    "ad",
+    "mock"
+   ],
+   "enforcer": [
+    "gate:text_safe",
+    "review:R02"
+   ]
+  },
+  {
+   "id": "M13",
+   "date": "2026-10-26",
+   "said": "files over 30 MB can't be sent to his phone",
+   "rule": "Over 30 MB: also make a 720p preview.",
+   "check": "size",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:size"
+   ]
+  },
+  {
+   "id": "M14",
+   "date": "2026-10-20",
+   "said": "in trials it needs to be a different first 3 seconds",
+   "rule": "Trial packs: first3_check.py on the pack (SAME fails).",
+   "check": "first3",
+   "status": "active",
+   "routes": [
+    "repost-trials"
+   ],
+   "enforcer": [
+    "engine:first3_check.py"
+   ]
+  },
+  {
+   "id": "M15",
+   "date": "2026-10-28",
+   "said": "short form needs to be fast pace",
+   "rule": "Live score within the reference's range; first move by 1.5 s (motion_score).",
+   "check": "motion",
+   "status": "merged",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:motion"
+   ],
+   "superseded_by": "M01"
+  },
+  {
+   "id": "M16",
+   "date": "2026-10-19",
+   "said": "you didnt make any animations for the side you just put text... not even a photo",
+   "rule": "Every food, object or number on a panel gets a real photo, a drawn object or a chart.",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "record:assets",
+    "review:R10"
+   ]
+  },
+  {
+   "id": "M17",
+   "date": "2026-10-29",
+   "said": "(10-29) use them when needed dont be obxious about them | (10-16, SFX) gives off young vibes and gets a bad demo so only on request from me",
+   "rule": "Sound effects only where a beat needs one, never obnoxious: about 3-4 a minute at most in a reel, none in the first 0.5 s, never two within 1.5 s, quiet and varied, planned in the shot list. OB 10-29 replaced the 10-16 'only on request'. Code since 2026-11-07 (sfx_check.py, the gate's sfx check: caps, placement on the frame, level under his voice); entrances-only and 'a beat needs one' stay by eye.",
+   "check": "sfx",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:sfx",
+    "record:sfx",
+    "review:R27"
+   ]
+  },
+  {
+   "id": "M18",
+   "date": "2026-10-16",
+   "said": "grade A made him look albino",
+   "rule": "Grades are picked from 3-4 options on his real frame; never lift highlights on his face.",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R17"
+   ]
+  },
+  {
+   "id": "M19",
+   "date": "2026-10-26",
+   "said": "when i say thousands dont just show 2 clients ... keep flashing them fast",
+   "rule": "Clients only on the 'thousands' line, flashed fast like the YouTube edits.",
+   "check": "manual",
+   "status": "superseded",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [],
+   "superseded_by": "M56 (OB 11-07 'when i say clients you are suppose to put clients on screen for proof')"
+  },
+  {
+   "id": "M20",
+   "date": "2026-10-26",
+   "said": "i dont like the background music you chose, they had a different vibe",
+   "rule": "Music matched to the reference's vibe (identify theirs: demucs + shazamio); post without baked music when unsure.",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "record:music"
+   ]
+  },
+  {
+   "id": "M21",
+   "date": "2026-10-21",
+   "said": "consent / exclusions",
+   "rule": "Every client photo through proof_screen.py and an eye check; never a client who said no to being shown.",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "record:assets",
+    "review:R13"
+   ]
+  },
+  {
+   "id": "M22",
+   "date": "2026-06",
+   "said": "no AI imagery, voice or music",
+   "rule": "No AI people, AI voice or AI music anywhere.",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "record:assets",
+    "review:R11"
+   ]
+  },
+  {
+   "id": "M23",
+   "date": "2026-10",
+   "said": "no barbell squats or deadlifts",
+   "rule": "No barbell squat or deadlift visuals presented as his advice (RDLs fine).",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R15"
+   ]
+  },
+  {
+   "id": "M24",
+   "date": "2026-10-16",
+   "said": "no full render until he approves the shot list",
+   "rule": "Shot-by-shot breakdown with real stills approved before any full render.",
+   "check": "manual",
+   "status": "superseded",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [],
+   "superseded_by": "OB 11-09 'just do what i tell you': no approval hold; the breakdown is written to WORK (record:breakdown) and checked by a fresh agent before the full render"
+  },
+  {
+   "id": "M25",
+   "date": "2026-10-28",
+   "said": "(proactive) the 10/10 captions needed hand fixes: 'bam' for 'bare minimum', 'Speeding up' for 'Speed it up', 'and has been shown' for 'It's been shown'",
+   "rule": "Captions say exactly what he said, not what the script said (words read off the frame, checked against the transcript).",
+   "check": "captions",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:captions",
+    "review:R03"
+   ]
+  },
+  {
+   "id": "M26",
+   "date": "2026-10-28",
+   "said": "you cut me off you dumbass, stop cutting me off when im saying a word | 10-28 again: \"you still cut off on the fdoe\" (the clip began on \"coach.\" and ended on \"...gut health\" mid-sentence)",
+   "rule": "No clip, mock, preview or piece starts or ends inside a word: every edge snaps to whole words (zero_dead / moves.py), the file never starts or ends while he is talking, and every piece edge is checked against the source audio. Found on the same day: the four posted C4378 FDOE hooks end mid-'follow'. A clip, mock or excerpt also starts and ends on whole sentences, inside a real breath (moves.snap; the gate checks the clip's first and last words against the source transcript).",
+   "check": "edges",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:edges",
+    "review:R23"
+   ]
+  },
+  {
+   "id": "M27",
+   "date": "2026-10-28",
+   "said": "you still fucking cut me off on fdoe (the counter mock, after M26's fix: it was cut from the posted FDOE render, and the cut-offs were the render's own: lines that overran into the next word, '225 calories | ...lories rich', a dead second before every line; the gate only saw the mock's two outer edges, and its silence FAIL was sent anyway)",
+   "rule": "A clip, mock or move cut from one of our renders inherits every cut inside it. The gate follows each piece down to the raw take through the render's recorded pieces (qc/pieces, written by after_render from segs, copied by deliver.py) and checks every inner cut; a render whose pieces were never recorded fails closed. Build mocks from the raw take, not from a posted render. Lines said in one breath join on the quietest point between the two words, on the same frame. A video goes to OB (AirDrop or chat, mock or final) only on a gate PASS: qc_gate.py --ok FILE first. Inside the cut too: a soft first syllable before a stop is the word (zero_dead.word_core bridges the closure: the FDOE's 'Tri|ple' was heard as 'Purple'), and a line that ends at the dip into an unused one-breath word is clean only at Apple's word boundary, 15 dB under both sides (qc_gate.valley_cut; fixtures valley_end, closure_start, closure_ok).",
+   "check": "edges",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:edges"
+   ]
+  },
+  {
+   "id": "M28",
+   "date": "2026-10-28",
+   "said": "(found building the 10/10 feed versions) 6 photo picks came from AI image sources: StockCake, an AI stock site (micros 4x4 V10 'pizza with friends' x2, micros M02 and M23, hormones 4x4 V09 'nurse drawing blood'), and a ChatGPT image (micros 4x4 V01). The micros and hormones 4x4 trials posted 10-26/27 showed some of them.",
+   "rule": "No AI imagery, ever (memory feedback_no_ai_imagery_ever): check every photo pick's source URL and filename before a render. StockCake is out, and so is any source naming ChatGPT, OpenAI, DALL-E, Midjourney, Stable Diffusion, Firefly, NightCafe or Craiyon. The 10/10 feed engine drops them at load (tenten3_c4376_edit.picks_no_ai); a line whose only picture was AI holds the picture before it.",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "record:assets",
+    "review:R11"
+   ]
+  },
+  {
+   "id": "M29",
+   "date": "2026-10-28",
+   "said": "they were pretty shit tbh / a lot of pauses / and deadspace (the 10/10 trials: tenten.pieces only cut silences over 0.45 s, 7.4-8.7% silence, gaps up to 0.43 s). Then the zero-dead cut on the same takes clipped the soft 'f' of 'Four' and the hum ending 'bare minimum', and butted every item number onto the line before (whisper medium lost 11 gut words the trial cut kept).",
+   "rule": "List videos get zero_dead.cut_words (no gap over 0.2 s), plus edge ramps: every edge takes in sound still rising into or fading out of its word (within 44 dB of the line's level; at most 60 ms before and 80 ms after; never past the boundary with the neighbouring word or the middle of a cut gap). Each item number gets a 0.08 s beat, counted from the word. Prove it with Apple, whisper base and whisper medium on the new cut AND the previous cut: a word the old cut kept and the new one loses is damage; one lost in both, or lost mid-line where nothing was cut, is the ASR. Result: 10/10 gut 0 words lost (medium), silence 5.5%, longest gap 0.19 s.",
+   "check": "words",
+   "status": "active",
+   "routes": [
+    "reel-lists"
+   ],
+   "enforcer": [
+    "gate:words"
+   ]
+  },
+  {
+   "id": "M30",
+   "date": "2026-10-28",
+   "said": "and bad background music choice (the 10/10 trials)",
+   "rule": "Pick the music; don't leave it to chance. Choose it from T7 OB-EDITS/music/MUSIC-LIBRARY.md. A feed post gets a Lane A (royalty-free) track baked in, so it can't be muted and can still be boosted: soft and steady, 21-27 dB under his voice (Megann's level), ducked while he talks. A voice-only copy goes alongside. Never bake a Lane B (commercial) song; those go in the app. The 10/10 feeds: Pixabay 'Lofi Soul' (ZephiraMusic) at -24 dB.",
+   "check": "manual",
+   "status": "superseded",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [],
+   "superseded_by": "OB 11-07/11-09: M57 (upbeat bed) + M58 (bank first) + 3+ scored candidates (record:music); Lane A/B retired"
+  },
+  {
+   "id": "M31",
+   "date": "2026-10-28",
+   "said": "(caught before OB saw it: the backlog reactions) Her clips were cut on the reel's own word times. Apple put 'For 43%' 1.6 s late in C4364's clip, so the cut came in at 2.92 s mid-sentence and lost '43%'. The C4397 bleep sat on 'had the' and left '-ucking' audible. Under her loud music bed the gate's quiet test passed inside 'fault' (a cut at 8.03 s would have halved it), and C4380's beat ended before 'begin.' (said after a 0.5 s pause). His own C4371 bleep sat on the end of 'other,' and missed the 'k'.",
+   "rule": "A reacted-to clip is cut like his lines: edges hand-picked at her sentence edges, then proved. Run _work/edge_probe.py (the gate's verdict, her Silero speech probability and the level every 10 ms). Under a music bed, an edge also needs the speech probability low, not just the gate's OK. Then run _work/her_check.py: whisper medium and Apple must hear the whole beat. Her pauses are cut only where both new edges pass the gate. Her words (as heard) go in the gate script. A bleep goes where the word sounds (level plus VAD; DTW word times run about 0.25 s late), never where an ASR says. Prove it on the bleeped audio: the word gone, its neighbours whole. A reel that is only a song plays its beats whole, with 150 ms fades. A reel's intro music can be as loud as her voice. Before calling a sound her first word, hear that span alone: whisper medium tags music '(upbeat music)'. C4364's first beat opened on 2.9 s of her intro music because whisper base's stretched word times and a level jump were read as '43%'. Apple had it right at 4.08 s.",
+   "check": "edges",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe",
+    "long-form"
+   ],
+   "enforcer": [
+    "gate:edges"
+   ]
+  },
+  {
+   "id": "M32",
+   "date": "2026-10-29",
+   "said": "(caught before OB saw it: the backlog reactions) Each piece's frames were rounded on their own (n = round((b - a) * fps)) while its sound sat at the exact running time. The picture drifted off the sound by up to 66 ms (C4364 at 9.4 s, sound early: noticeable on her lips). Each piece also read its sound for the rounded length, up to 17 ms past its clean edge or short of it. The music bed un-ducked after his last word and the file ended mid-swell (C4380 R: 'ends mid-word', -24 dB).",
+   "rule": "Any engine that cuts pieces to frames takes its frame counts from the running total of exact times: f0 = round(t0 * fps), f1 = round((t0 + b - a) * fps), n = f1 - f0. Picture and sound then stay within half a frame everywhere. Each piece's sound is its exact length (b - a) at its exact t0. The picture is never shorter than the sound (add a frame to the last piece). A music bed fades out over the last 0.4 s. Check: the worst picture/sound offset over all pieces is printed before a render (brand_react_render: 16 ms at most on the 10-29 backlog).",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "route:subjects/tools.md"
+   ]
+  },
+  {
+   "id": "M33",
+   "date": "2026-10-29",
+   "said": "make the reel clip from youtube alwasy under 1:30 mins, if it doesnt go well no need to clip, dont force it if its not good or a complete stand alone clip like the rule i gave you",
+   "rule": "A reel clipped from a YouTube video is always under 1:30, and only made when a part stands alone as one complete, good clip. If none does, clip nothing: never force a clip or a count (ytclip.py cut stops a reel at 90 s).",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "yt-clips"
+   ],
+   "enforcer": [
+    "route:routes/yt-clips.md"
+   ]
+  },
+  {
+   "id": "M34",
+   "date": "2026-10-30",
+   "said": "you fucked up / c4400 1:31 is where im reacting to the person / c4401 1:06 im reacting / after i react i say my thing and the reaction can move to make it fit because i fucked up and filmed it wrong (the FDOE Artzen openings) / 10-31: C4405 wtf that wasn't me reacting it that was me scratching my leg / Same with Gary wtf you can see me looking away and not playing the vids, I played the Gary vid you can hear it / 11-01: the fdoe eating again you didnt get me reacting, 33 seconds in is me reacting",
+   "rule": "A reaction opening uses the stretch where he watches the clip on his phone, found by a frame sheet of the window, wherever it sits in the take (he may film it after his lines; move it to the start). Never pick it by silence before his first line. His timestamp wins. When the clip is audible in his take, every reaction (opener and each claim's) is the moment his phone played those very seconds, matched by sound (camera = clip + offset); never a pause between his lines. Watched muted: the stillest stretch with the phone in his hand, checked on a frame sheet (a scratch or a reach looks like watching from the face). A reaction is his visible reaction (he looks up at the lens, pulls a face), not only him watching the phone: when her intro's sound is heard in more than one spot (C4404: 19.42 and 32.61), each is a candidate; take the one where he reacts.",
+   "check": "engine: react_window_audit.py",
+   "note": "Gaze (bin/gaze) measured 10-30 cannot tell phone from lens at this framing (eye openness 0.24-0.43 in old and new windows). Face-size jump caught the old C4400 window (x1.41, he leans in then sits back) but not C4401, so no automatic check. 10-31: react_window_audit.py (bin) matches the clip's sound against the camera audio (log bands, slow level removed; raw waveform scattered) and FAILs a reaction off his playback; fdoe_artzen.py runs it before every render (react_check) and writes a sheet per reaction to fdoe/react_<take>/. Selftest on the T7 takes: Gary's 10-30 windows (303-377 s) FAIL, his playback (clip + 24.26 s) PASSes, Ken and Nitzan (muted) WARN. Hand movement is printed, not judged: Ken's scratch (2.0-2.6) and Nitzan's good reaction (up to 2.8) overlap. 11-01: C4404's opener at 19.8 showed him watching, not reacting; his reaction is 32.61 (her intro heard there, x24; he looks up at 34.8). Ken's moved to 33.4 (phone up, watching, glancing up).",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe"
+   ],
+   "enforcer": [
+    "engine:react_window_audit.py",
+    "record:react_windows",
+    "review:R08"
+   ]
+  },
+  {
+   "id": "M35",
+   "date": "2026-10-30",
+   "said": "my face is alwasy in the opener",
+   "rule": "A long-form video opens on his face: frame 1 is his talking head (hook text on it is fine, the C4395 caption plates) and no full-screen insert (stock, his own b-roll, a clip, a full card) covers him before 3 s. A notes glance inside the hook gets his own footage, never stock strangers.",
+   "check": "opener",
+   "note": "C4402 pass 3 opened on a stock busy gym under '99.9%' (reels_v2 turned the H01 caption plate into a footage reel) and then a stock glance cover, so his face first showed at 0:06. Fixed by story/opener_face.py; the gate reads the edit's cover spans (--work).",
+   "status": "active",
+   "routes": [
+    "long-form"
+   ],
+   "enforcer": [
+    "gate:opener"
+   ]
+  },
+  {
+   "id": "M36",
+   "date": "2026-10-30",
+   "said": "my lips arent synced with what im saying, its all fucked up on the male review ones (C4400)",
+   "rule": "Never assume one camera-to-mic offset for a whole take. Measure it window by window (3 s windows every 2 s over the used range, against the camera's own sound) and map each piece through that: the MOTIV file can skip (C4400 skipped 2.64 s between two lines and about a frame near 116 s, so his opening lines played 2.6 s off his lips). A rounded offset (79.00) is a guess, not a measurement.",
+   "check": "lipsync",
+   "note": "Tool: scratchpad sync/fine.py CAM MIC off1,off2 t0 t1 step win (the matched offset and its correlation per window). sync_av.py --measure-only fits one line and refused C4400 (residual 80-176 ms): that refusal was the warning sign. fdoe_artzen.py now takes CFG sync runs (from, offset[, drift]). 11-03 AGAIN, C4411 Soufiane (OB: 'the lean guy also the lips dont sync, you have been doing that ... i thought you had a built in loop so you upgrade and never make the same mistake twice'): the CFG kept sync=[(0,0)] on a 639 s take whose mic sat +0.812 s off the camera from 407 to 470 s (a MOTIV skip), so the hook and the next 7 lines played 0.8 s ahead of his lips. The check was 'manual', so nothing stopped it. Now: every render records its camera map and the gate measures every piece against the camera's own sound (GCC-PHAT, FAIL over 40 ms). 11-03 night: the check is a confidence vote over the whole piece and 1.2 s windows (votes within 20 ms). A whole-piece match and an even-count median each read a clean piece as off (C4412 +41 ms, C4410 -164 ms).",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:lipsync"
+   ]
+  },
+  {
+   "id": "M37",
+   "date": "2026-10-30",
+   "said": "while im talking never not show me, you did full screen overlays while im speaking about the food, never do that",
+   "rule": "While he talks he is on screen, every frame. No full-screen overlay (b-roll, her footage, a photo, a slide) over his speech in a reel. A look-away cover becomes the screen + PiP (the picture on top, him in the box, his head over its edge); a series slide or a photo goes in the top card with him below.",
+   "check": "manual",
+   "note": "Replaced the 10-30 morning full-frame gaze covers in fdoe_artzen.py (look_aways now switch full-frame lines to the box). C4383's full-screen C1797 dream-body clip broke it too, and he hated how he looked in it ('you showed me looking like actual shit'): his best photo is DSC07329.",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R05"
+   ]
+  },
+  {
+   "id": "M38",
+   "date": "2026-10-30",
+   "said": "i dont like the black background whe showing the calories ... make it more engaging and not black (10-29 on C4383: make the background better, not just black, looks boring)",
+   "rule": "No black or near-black backgrounds behind cards, screens or his box. Default: his own studio from the same frame, blurred and warm, moving with him, with the faint dot grid (C4383 background(); fdoe_artzen studio_bg, gain 0.8).",
+   "check": "manual",
+   "note": "Look at a still of every card layout at phone size before the render; gain 0.5 still read dark.",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R06"
+   ]
+  },
+  {
+   "id": "M39",
+   "date": "2026-10-30",
+   "said": "on the female one make sure you are showing her intro video again at the top not just a photo",
+   "rule": "Whenever the creator's opener is on screen it plays as video (from its first frame, slowed or played back and forth to fill his line), never a held frame.",
+   "check": "manual",
+   "note": "fdoe_artzen intro_screen: INTRO_V at 0.75x, forward then back; a letterboxed strip goes whole into the top card.",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe",
+    "long-form"
+   ],
+   "enforcer": [
+    "review:R07",
+    "route:routes/reaction.md"
+   ]
+  },
+  {
+   "id": "M40",
+   "date": "2026-10-30",
+   "said": "on the horzontal ones you were suppose to have relevant split screen / not just through the orginal reaction above me / you were suppose to find relevant things like you do for youtube; then 22:35 with https://www.instagram.com/reel/DfIndnRoz80/ (Dylan Page): really really study this because this is what I meant for a the split screen style when I shoot horizontal",
+   "rule": "In the split look (horizontal takes) the top half shows a RECEIPT for the claim he is making on that line, from the story itself: the clip's matching moment (her when he names her, her plate when he names the food, the scale number), a real screenshot of the caption, comment, label, study line or Cronometer screen he reads (a yellow highlighter sweeps the key phrases as he says them; the number he says gets a highlight box), the brand's logo or its own post when he names a brand, his own footage or photo when he talks about himself. A red arrow slides onto the person he names; a red circle draws around the key object. One receipt per claim, changing on the claim's first word (median 3.5 s, 0.5-8 s). Never stock in this look, never her clip looping under a whole line.",
+   "check": "manual",
+   "note": "Decoded frame by frame 10-30 night: ~/ob-editor/styles/dylan-page-split.md (seam y 876, him full frame on the turns, her clip full frame with its own sound, centred at full width with blurred bands; 26 visual events a minute against our C4396's 75). Supersedes the 16:xx version of this rule (cue words every 1.5-3 s, Pexels stock), which C4396/C4397 used. brand_react_render gaps before the next horizontal edit are listed in the card. Earlier note: plan lines[Lxx].top = [{src, in, at, nth, y}]; TopReader + Composer.top_frames.",
+   "status": "active",
+   "routes": [
+    "reel-talking",
+    "reel-graphics",
+    "reel-reaction"
+   ],
+   "enforcer": [
+    "route:routes/short-form.md"
+   ]
+  },
+  {
+   "id": "M41",
+   "date": "2026-10-30",
+   "said": "(found by the editor at upload, not OB's words) C4398 v2 18:38.4: the last 0.9 s of Marissa's testimonial showed OB on the call under her name tag",
+   "rule": "A client clip's name tag stays on that client for the whole clip. Frame-check the last 1.5 s of every client clip at 5 fps: a recorded video call can switch its speaker view to OB (or anyone else) as the client finishes, so end the clip before the switch.",
+   "check": "manual",
+   "note": "C4398 C_P_MARISSA (Zoom recording) switches to OB's camera at about 3.85 s into the 4.77 s clip; tile check: ffmpeg -ss <edit_out-1.5> -t 1.6 -vf fps=5,tile=4x2. Found while packaging the upload, after both QC gates passed it (the gate reads text on faces, not who the face is).",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "route:subjects/proof-clients.md"
+   ]
+  },
+  {
+   "id": "M42",
+   "date": "2026-11-03",
+   "said": "when they are talking dont play their audio when im talking, so hally mute her when im talking, and dilara, the rest are perfect",
+   "rule": "A creator's voice never plays under his. When her clip has speech, her sound stops the moment he talks (fdoe_artzen her_mute; her full-frame clips and his silent reaction keep it). Her music may sit under him as a ducked bed.",
+   "check": "engine: fdoe_artzen her_check",
+   "note": "C4413 Hally and C4412 Dilara 11-03: the opener kept her intro at -18 dB under his hook lines. The words check can't see it (a ducked voice under his isn't transcribed), so the engine gets a pre-render check (her speech under his lines without her_mute stops the render). 11-03: fdoe_artzen her_check() stops a render when her sound overlaps his lines for 0.3 s+ and her clip speaks in that span (Apple speech_words, cached), unless her_mute or her_ok='music'. Planted test: OB_HER_CHECK_TEST=1 on C4413 stops with 'her voice plays under his lines for 2.9 s'.",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe"
+   ],
+   "enforcer": [
+    "engine:fdoe_artzen",
+    "review:R08"
+   ]
+  },
+  {
+   "id": "M43",
+   "date": "2026-11-03",
+   "said": "why is it scrolling up on the reactions i dont understand why you do taht ... stop with the video scrolling when im reacting to it, loosk weird",
+   "rule": "A clip in a box never moves unless the plan says so. Every clip we pre-encode is read back at the size the file really has: an odd size (the reaction inset was 562x999) is encoded as 562x998, and reading 999 rows a frame from it slides the picture up one row per frame (about 30 px/s) and wraps the next frame in at the bottom.",
+   "check": "engine: fdoe_artzen Reader (probes the file's real size, never misreads)",
+   "note": "Found 11-03 by phase-correlating the delivered reactions against the creators' originals: the originals were still (0 px/s) while our inset slid up 27-35 px/s in C4410, C4411, C4412 (and the Brecka claim insets used the same 999-row reader). Root cause: make_clip asked libx264 for 562x999; yuv420p rounds to even.",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe"
+   ],
+   "enforcer": [
+    "engine:fdoe_artzen",
+    "route:routes/fdoe.md"
+   ]
+  },
+  {
+   "id": "M44",
+   "date": "2026-11-03",
+   "said": "make the cuts sharper, still feels like there is dead space after im done talking, needs to be faster pace",
+   "rule": "Between two of his lines, the cut leaves no breath and no trailing sound: from the end of his last word to the start of his next word at most about 0.15 s (inner pauses were already 60 ms max; the line joins were the slow part: median 358 ms, up to 1.08 s, 27 of 36 joins over 150 ms in C4411).",
+   "check": "engine: fdoe_artzen tight joins + gate words/silence",
+   "note": "Measured 11-03 on C4411 from Apple word times through the render's pieces. Pure silence was only 1.7% (the gate's silence check passed), so the slack was breath and word tails at the joins, which the silence check can't see.",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "engine:fdoe_artzen",
+    "review:R24"
+   ]
+  },
+  {
+   "id": "M45",
+   "date": "2026-11-03",
+   "said": "furure refreence stop wiht so many variations, just one after editing now",
+   "rule": "One file per edit in the AirDrop folder: the finished cut with its music, full size. No no-music copy, no 720p phone copy, no variant pack unless OB asks for one.",
+   "check": "engine: deliver.py one file by default (--phone only on request)",
+   "note": "The 11-03 FDOE batch went out as 16 files (4 cuts x music/no music x full/720p).",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "engine:deliver.py",
+    "review:R28"
+   ]
+  },
+  {
+   "id": "M46",
+   "date": "2026-11-03",
+   "said": "(found by Claude on the Mac mini, macOS 27: Dilara's and Tamara's FDOE re-renders started with 100% 'no face' gaze scans)",
+   "rule": "A Vision tool that fails never reads as an empty result. On the Mac mini the Neural Engine refuses a second Vision model while another job holds it ('no ANE resources'); our Swift tools retry, then run the model on the GPU or CPU, and print an error instead of 'none'. A gaze scan with no face in over 40% of frames is not saved.",
+   "check": "engine: person_mask_dir/faces/gaze fallbacks + gaze_fdoe guard",
+   "note": "11-03: person_mask_dir died with SIGTRAP (fixed: retry, GPU, CPU); faces and gaze printed 'none' for every frame while another render's matting held the ANE (rebuilt with the same fallback, 21:42); C4412 geo crashed on an empty face list; gaze_fdoe.py now refuses a scan that is mostly 'no face'.",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "engine:person_mask_dir/faces/gaze",
+    "route:subjects/tools.md"
+   ]
+  },
+  {
+   "id": "M47",
+   "date": "2026-11-04",
+   "said": "ummmm the frozen ice cream video of me reacting isnt showing the reaction",
+   "rule": "A reaction always shows the clip he is reacting to while he watches it. The sober (S) look shows her clip under the title by default (sober_clip defaults to True); his-phone-only frames with her words big are an opt-out, never the default.",
+   "check": "engine: brand_react_render sober_clip default True",
+   "note": "Same miss as C4364 on 10-30 (\"there isnt the reaction on this one at all\"), fixed then per video with sober_clip; 11-04 C4417 mocks went out without it. Now the default in brand_react_render.py and the 11-04 job copy react_sober.py.",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe",
+    "long-form"
+   ],
+   "enforcer": [
+    "engine:brand_react_render",
+    "review:R08"
+   ]
+  },
+  {
+   "id": "M48",
+   "date": "2026-11-04",
+   "said": "also make the cuts sharper, still feels like there is dead space after im done talking, needs to be faster pace",
+   "rule": "No stretch inside an edit without his voice (or hers) over 0.45 s, even when it isn't silent: a mic pickup, a thump or a chair creak is dead air. Pieces start on the voice, not on the noise before it. The edge check measures the voice band (over 150 Hz), so low rumble before a word never reads as talking.",
+   "check": "silence (voice band) + edges (voice band)",
+   "note": "Found by Claude 11-04 on the C4416 Kallaway cut: L01 opened on 2.3 s of him picking up the mic (cam 116.02-118.25, energy all under 300 Hz) before 'I could have sworn'. Apple stretched 'I' over it, the takes EDL kept it, and the full-band silence check read it as sound.",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:silence",
+    "gate:edges",
+    "review:R24"
+   ]
+  },
+  {
+   "id": "M49",
+   "date": "2026-11-04",
+   "said": "(found by the gate on the 11-04 sober re-renders: C4417 'on the table' missing, C4418 'What' and 'This' clipped)",
+   "rule": "Every cut point is checked against the audio, not the words file: a creator's sentence ends after her last word's sound decays (C4417's 'table.' ran to 28.28 s, the words file said 27.90), and his piece starts before his first word's onset (C4418 'What' began 44.36, the EDL cut at 44.48). Two pieces never overlap (C4417 L01 ran 0.66 s into L02).",
+   "check": "words + edges",
+   "note": "Fixed in the C4417/C4418 EDLs and plan on 11-04 (backups *.pre-1104fix). Also 11-04: deliver.py's fresh gate (--script) now runs with the render's recorded pieces. Without them it checked only the file's two ends and blocked C4417 on a whisper slip that the raw take excuses.",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:words",
+    "gate:edges"
+   ]
+  },
+  {
+   "id": "M50",
+   "date": "2026-11-04",
+   "said": "1:41 I don't like the framing of me so much dead space",
+   "rule": "Clip shots (box top right) are framed on him: measure his face in every clip shot; crop so his face sits mid-left, or put the box top left where he leans right. Never cut off at the frame edge, never under the box.",
+   "check": "manual",
+   "note": "C4415 rev 2: rev2/pip_faces.py + rev2/pip_frame.py; 16 of 40 clip shots had him cut off at the left edge, 3 had the box over his face.",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe"
+   ],
+   "enforcer": [
+    "review:R21"
+   ]
+  },
+  {
+   "id": "M51",
+   "date": "2026-11-04",
+   "said": "I wish you flashed the videos at the start saying which ones we are reviewing / when I say scrolling see other diets, mirror that and show it on the screen",
+   "rule": "A review opens by showing who is being reviewed (each creator's own video on his words, with who she is). When he describes a behaviour, show it on screen.",
+   "check": "manual",
+   "note": "C4415 rev 2 feed F01 + lineup U01 (react_cards types feed, lineup).",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe",
+    "long-form"
+   ],
+   "enforcer": [
+    "route:routes/reaction.md"
+   ]
+  },
+  {
+   "id": "M52",
+   "date": "2026-11-04",
+   "said": "make up the comments when I say the comments",
+   "rule": "When he says 'the comments', comments go on screen: made up only when he asks, labelled 'comments like these', masked handles, no likes, never attributed to a real post.",
+   "check": "manual",
+   "note": "C4415 rev 2 K3, K4 (react_cards type cmts).",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "route:subjects/graphics.md"
+   ]
+  },
+  {
+   "id": "M53",
+   "date": "2026-11-04",
+   "said": "Just overlay way more graphics while I'm talking, no need to take the whole screen / Just needs to be way better entertainment",
+   "rule": "Long-form review: fill every talking stretch over ~6 s with an on-frame graphic beside his face (tags with icons, his lines as titles, labels, stamps, study papers); ~8 a minute on C4415 rev 2. List the empty stretches before the breakdown.",
+   "check": "manual",
+   "note": "C4415 rev2/talk_map.py --free lists the empty stretches.",
+   "status": "active",
+   "routes": [
+    "long-form"
+   ],
+   "enforcer": [
+    "route:routes/long-form.md"
+   ]
+  },
+  {
+   "id": "M54",
+   "date": "2026-11-04",
+   "said": "I hate the background music",
+   "rule": "Music for long-form is picked by ear from an A-D pick video (A = no music) before the full render; the Mixkit chapter score shipped on C4415 v3 is out for this video.",
+   "check": "manual",
+   "note": "C4415 rev2/audition.py.",
+   "status": "superseded",
+   "routes": [
+    "long-form"
+   ],
+   "enforcer": [],
+   "superseded_by": "OB 11-09 'just do what i tell you': the editor picks music from 3+ scored candidates (record:music, M57/M58), runner-ups named at delivery"
+  },
+  {
+   "id": "M55",
+   "date": "2026-11-04",
+   "said": "(gate catch on the C4416 full cut: 2 flat-topped peaks at 81.5 s, the third boom)",
+   "rule": "sub_drop_boom.mp3 is almost all infrasound (file peak 1.35, 1.14 of it under 30 Hz): no phone plays it, it eats headroom, and its slow crests read as clipped peaks. Every mix that uses it high-passes it at 35 Hz (two highpass=f=35 stages) before the volume and fade.",
+   "check": "audio",
+   "note": "canvas_react3.py audio(); the C4416 audio was re-mixed onto the same picture (--remux-audio) and passed.",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:audio"
+   ]
+  },
+  {
+   "id": "M56",
+   "date": "2026-11-07",
+   "said": "when i say clients you are suppose to put clients on screen for proof | (earlier) Show client transformations as well for CTA and intro saying who I am",
+   "rule": "Every time OB says clients, coaching people, 'over a decade' (his proof line) or a client's name, a consented client before/after is on screen within about 1 s, first names only (no Client Y photos; Client P never by name or face; a GLP line only shows clients really on a prescribed GLP-1). The intro proof line and the end CTA always carry client transformations. C4424 v1 shipped with none.",
+   "check": "clients",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:clients",
+    "review:R13"
+   ]
+  },
+  {
+   "id": "M57",
+   "date": "2026-11-07",
+   "said": "I hate that tone and background music you chose. Oddly depressing for an educational video (C4424)",
+   "rule": "Educational videos get an upbeat, bright bed (major key, light, positive), never melancholic or moody. OB picks the bed by ear from 2-4 previews under his voice before the render; never reuse another video's bed by default. Mixkit 'Tapis' and 'Vastness' are banned for educational videos.",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "record:music",
+    "review:R26"
+   ]
+  },
+  {
+   "id": "M58",
+   "date": "2026-11-07",
+   "said": "for music, use real music first for short form and the viral ones that are in the bank before ever making it yourself, yt is a little different because of copyright rules so do copyright friendly and also make sure you match the tone for them",
+   "rule": "Short form: real music, his saved viral songs in the bank first (T7/MUSIC/, Nineteen and Chopin at the T7 root, Lane B with files), then the bank's Lane A tracks, then a new real track (page checked). Never music we make (code-written beds, synths, AI) while the bank has a fit. Always a voice-only copy; ads and boosted posts stay royalty-free. YouTube: copyright-friendly only (human-made, licensed for monetized YouTube, page shows no 'AI generated' and no 'Content ID Registered'), credited; never a viral, commercial or unknown-source song. Both: the track matches the video's tone (educational = upbeat, M57). The source is code (check 'bank'); the order and the tone stay manual.",
+   "check": "bank",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:bank",
+    "record:music",
+    "review:R26"
+   ]
+  },
+  {
+   "id": "M59",
+   "date": "2026-11-07",
+   "said": "sound effects use the sound effects from the bank first before making your own always, we have so many to pick from",
+   "rule": "Every sound effect comes from the banks first: sfx_ob_drive (his Drive pack), sfx_tai, sfx_real (Kenney), the T7 sfx-library (Openverse), then a new Openverse search. Our code-made kit (~/ob-editor/assets/sfx, sfx.py) and earshot forge only after the banks and a search found nothing, written in the plan hit as bank_miss. C4424 went out with the code-made pops and whooshes.",
+   "check": "bank",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:bank",
+    "record:sfx",
+    "review:R27"
+   ]
+  },
+  {
+   "id": "M60",
+   "date": "2026-10-23",
+   "said": "showed me looking down and breathing",
+   "rule": "Cut inhales and hard breathing like pauses; no audible breath left between his lines",
+   "check": "silence",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:silence",
+    "engine:breaths.py",
+    "review:R24"
+   ]
+  },
+  {
+   "id": "M61",
+   "date": "2026-10-18",
+   "said": "dont get rid of any claims",
+   "rule": "Every line he shot stays unless he marked it (\"cut that, Claude\"); a factual slip is one clause in the delivery note",
+   "check": "words",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:words",
+    "gate:cues",
+    "review:R23"
+   ]
+  },
+  {
+   "id": "M62",
+   "date": "2026-10-21",
+   "said": "cut me saying it over and over",
+   "rule": "No line said twice; one CTA per video",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R23"
+   ]
+  },
+  {
+   "id": "M63",
+   "date": "2026-11-07",
+   "said": "jesus i hate how you are editing, its zooming in and out non stop and looks retarded",
+   "rule": "No punch-ins, pushes or zoom kicks (UGC excepted); a hard-cut scale change stays within the route's hard-cut scale limit",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R18"
+   ]
+  },
+  {
+   "id": "M64",
+   "date": "2026-11-07",
+   "said": "Why is it so fidgety? On the animations. It's not smooth at all.",
+   "rule": "Motion is smooth: springs at or above the route's damping minimum, no kicks, one render frame per output frame",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R19"
+   ]
+  },
+  {
+   "id": "M65",
+   "date": "2026-11-06",
+   "said": "They use really good background for their greenscreens",
+   "rule": "A green-screen background is the picture of that sentence; no stock filler; no upscale past the route's limit",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "reel-talking",
+    "reel-graphics",
+    "ad",
+    "long-form"
+   ],
+   "enforcer": [
+    "review:R20",
+    "record:assets"
+   ]
+  },
+  {
+   "id": "M66",
+   "date": "2026-11-06",
+   "said": "on the videos you fucked up on the green screen and cutting me out for overlays",
+   "rule": "Cutouts are BiRefNet only; never GrabCut, drawn masks or Vision masks; no blur box beside him",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R20",
+    "hook:agent-pre"
+   ]
+  },
+  {
+   "id": "M67",
+   "date": "2026-10-29",
+   "said": "you showed me looking like actual shit wtf",
+   "rule": "Never C1797 to C1802; the lean photo is DSC07329",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R14",
+    "record:assets"
+   ]
+  },
+  {
+   "id": "M68",
+   "date": "2026-10-30",
+   "said": "Don't do the same photos for me over and over mix them up",
+   "rule": "Photos of him come from the retouched bank, viewed first, never the same one twice in a row",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R14",
+    "record:assets"
+   ]
+  },
+  {
+   "id": "M69",
+   "date": "2026-11-09",
+   "said": "I hate your color grading",
+   "rule": "UGC grade matches the reference's measured numbers; no blur next to him; his board writing stays as shot",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "ad"
+   ],
+   "enforcer": [
+    "review:R17",
+    "review:R20"
+   ]
+  },
+  {
+   "id": "M70",
+   "date": "2026-10-28",
+   "said": "these bubble text scream ai editing",
+   "rule": "No boxed or bubble cards; Big Shoulders Display, key word in the key colour",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R11",
+    "review:R12"
+   ]
+  },
+  {
+   "id": "M71",
+   "date": "2026-10-20",
+   "said": "I hate how it's only half the screen, so much black space",
+   "rule": "Cards and inserts fill the frame; no static photo tiles on black",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R06"
+   ]
+  },
+  {
+   "id": "M72",
+   "date": "2026-10-29",
+   "said": "do the same frequency as markus video",
+   "rule": "Overlay rate matches the reference's measured rate (overlay_freq.py)",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "reel-graphics",
+    "long-form"
+   ],
+   "enforcer": [
+    "engine:overlay_freq.py",
+    "record:format_check"
+   ]
+  },
+  {
+   "id": "M73",
+   "date": "2026-10-28",
+   "said": "make sure im actually lifting in the clip not just setting up",
+   "rule": "B-roll shows exactly what the line says (lifting, not setting up; the food he names)",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "review:R22"
+   ]
+  },
+  {
+   "id": "M74",
+   "date": "2026-11-06",
+   "said": "That isn't train bloom style",
+   "rule": "Copy a creator's format from measured layout shares before building (format_check rows)",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "reel-graphics",
+    "reel-reaction"
+   ],
+   "enforcer": [
+    "record:format_check",
+    "review:R29"
+   ]
+  },
+  {
+   "id": "M75",
+   "date": "2026-11-06",
+   "said": "damn you suck a lot more than i thought those thumbnails are dog shit",
+   "rule": "Thumbnails: full renders from his photo, studied against top thumbnails, never code collages",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "long-form"
+   ],
+   "enforcer": [
+    "route:routes/long-form.md"
+   ]
+  },
+  {
+   "id": "M76",
+   "date": "2026-10-30",
+   "said": "there isnt the reaction on this one at all",
+   "rule": "The reacted clip is on screen as video while he reacts (covered by M39/M47)",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe",
+    "long-form"
+   ],
+   "enforcer": [
+    "review:R07",
+    "review:R08"
+   ]
+  },
+  {
+   "id": "M77",
+   "date": "2026-10-21",
+   "said": "the TikToks and the news could've been shown longer",
+   "rule": "A clip with sound plays long enough to finish its line (no 7 s slice of a 60 s argument)",
+   "check": "edges",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "long-form"
+   ],
+   "enforcer": [
+    "gate:edges",
+    "review:R07"
+   ]
+  },
+  {
+   "id": "M78",
+   "date": "2026-11-03",
+   "said": "Make them bigger, don't cover me",
+   "rule": "The reaction box is as big as it can be while clearing his body",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe"
+   ],
+   "enforcer": [
+    "review:R21"
+   ]
+  },
+  {
+   "id": "M79",
+   "date": "2026-11-02",
+   "said": "make sure im not reacting ot myself reacting",
+   "rule": "Use the creator's original upload, never a re-upload or someone's reaction to it",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "reel-reaction",
+    "reel-fdoe"
+   ],
+   "enforcer": [
+    "record:assets",
+    "review:R07"
+   ]
+  },
+  {
+   "id": "M80",
+   "date": "2026-11-07",
+   "said": "turn the background music down",
+   "rule": "Bed at the route's bed level under his voice, stem vs stem",
+   "check": "bed_level",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:bed_level",
+    "review:R25"
+   ]
+  },
+  {
+   "id": "M81",
+   "date": "2026-10-30",
+   "said": "Stop I already posted it",
+   "rule": "Check whether a video is posted before acting on a note; a note on a posted video is for future edits",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "hook:prompt",
+    "route:subjects/after-posting.md"
+   ]
+  },
+  {
+   "id": "M82",
+   "date": "2026-11-07",
+   "said": "preview in folder so i can drag the video jesus",
+   "rule": "Nothing half-finished reaches a folder he can open: only ob_job.py finish writes there",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "hook:bash-pre",
+    "hook:send-pre",
+    "engine:ob_job.py"
+   ]
+  },
+  {
+   "id": "M83",
+   "date": "2026-11-07",
+   "said": "I'm telling you not to touch the video again",
+   "rule": "When OB says leave it, that video is not edited again",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "hook:prompt",
+    "route:subjects/delivery.md"
+   ]
+  },
+  {
+   "id": "M84",
+   "date": "2026-10-29",
+   "said": "i expected all 3 yesterday",
+   "rule": "Feed versions are the winning trial with only the named fixes; every version he asked for is delivered",
+   "check": "manual",
+   "status": "active",
+   "routes": [
+    "repost-trials"
+   ],
+   "enforcer": [
+    "route:routes/reposts.md"
+   ]
+  },
+  {
+   "id": "M85",
+   "date": "2026-11-06",
+   "said": "the body is legit the same on all of them",
+   "rule": "UGC: module bodies, scripts copied word for word, best take = words AND eyes on camera",
+   "check": "words",
+   "status": "active",
+   "routes": [
+    "ad"
+   ],
+   "enforcer": [
+    "gate:words",
+    "route:routes/ads.md"
+   ]
+  },
+  {
+   "id": "M86",
+   "date": "2026-11-11",
+   "said": "you didnt put the tranforamtions and testimonials of clients",
+   "rule": "REPEAT of M56 (OB 11-11, C4465 long form, 0:56.1). Every clients line (clients, coaching people, 'over a decade', a client's name) gets a consented client before/after on screen within about 1 s, on long form too. The gate's clients check FAILed C4465_final (6 of 6 client lines bare) and the FAIL was waved through with an editor-written override; an override now needs OB's words or a frame of proof, and gate_overrides.json must be keyed by check name.",
+   "check": "clients",
+   "status": "active",
+   "routes": [
+    "all"
+   ],
+   "enforcer": [
+    "gate:clients",
+    "review:R13"
+   ]
+  },
+  {
+   "id": "M87",
+   "date": "2026-11-11",
+   "said": "you just put a bench, im not in the overlay",
+   "rule": "WIDENS M37 to long form (OB 11-11, C4465 facequote at 1:06.4; earlier OB 10-30 and 11-10 'never not show me'). While he talks to camera he is in every overlay on long form too: a full-frame cover (b-roll, stock, photo) must show him (his own footage with him in it, a BiRefNet cutout of him over it, or him in a box). An empty bench, a stock clip or a photo alone FAILs. qc_assets.py ob_in_overlay checks the plan before a render (bin/faces on the clip frames); REVIEW-CHECKLIST R05 checks the render.",
+   "check": "ob_in_overlay",
+   "status": "active",
+   "routes": [
+    "long-form",
+    "reel-talking"
+   ],
+   "enforcer": [
+    "gate:ob_in_overlay",
+    "review:R05"
+   ]
+  }
+ ]
+}

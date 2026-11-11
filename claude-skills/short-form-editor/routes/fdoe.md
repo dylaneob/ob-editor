@@ -1,0 +1,75 @@
+# Route: FDOE review reel  (`reel-fdoe` in formats.json)
+
+Use it when: OB says "FDOE", "what I eat in a day", "review this diet", "the LEGIT one", and has chosen a creator's day-of-eating video and filmed his take. (To list diets to review or to pick one, run `/fdoe-review` first; to turn the video into food entries use `/diet-analyzer`.) Also read: `subjects/audio.md`, `subjects/graphics.md`, `subjects/qc.md`, `subjects/delivery.md`.
+
+## The bar
+- Order, OB 10-22: "the formula is the original video then me breaking down meal by meal after each meal is shown, its good for retention". OB 11-09: the original clip is never touched; the only thing added is him, green-screened over it. So: her clip plays whole first, then each meal, with him over her footage of that meal.
+- Numbers come from Cronometer, never from a script (OB 10-21: "i use cronometer nutrition analysis tab and i send the video and you build it out on chrome already and i edit what i think after"; OB 11-09: audits have no script).
+- Approved FDOE: C4400, C4401 (10-30: "hell yeah love it", "these are great") and C4410 to C4413 (11-03: "whatever is in the preview is perfect"). Their measured shape is in `~/ob-editor/qc/gold.json` (entry for this format): 84 to 144 s, lips within 10 ms, captions under his chin, no black, a card from Cronometer on top. The reviewer compares against it.
+- His own 2025 audits that earned the layout (cutout over a full-frame source, 20 of 20): 127 to 175 s, the totals card at 75 to 80% of the runtime, one fix at the close.
+- Series and layout references: `~/ob-editor/styles/artzen-breaking-reels.md` (card, series slam, caption feel) and `~/ob-editor/presets/PROVEN-OPENERS.md`.
+
+## Inputs
+- Her original video (the creator's own upload, a file or link; a link is downloaded with `yt-dlp` into `WORK/clip/`).
+- His camera file and mic file for the take, filmed wide at the desk so the matte gets his whole upper body. He watched her video on his phone at the start of the take.
+- His Cronometer account, open and logged in on Chrome.
+- No script. Start with `--no-script "FDOE audits are numbers from Cronometer, no script (OB 11-09)"`.
+
+## Steps
+1. **Start.** `python3 -I ~/ob-editor/bin/ob_job.py start reel-fdoe WORK --camera CAM.MP4 --mic MIC.wav --no-script "FDOE audits are numbers from Cronometer, no script (OB 11-09)" --ref CLIP_LINK`. Read the rules it prints.
+2. **Fix her clip.** Copy it to `WORK/clip/original.mp4`; never re-encode it. `ffprobe` for duration, fps, size. `~/ob-editor/bin/speech_words words` on its audio. Write `WORK/clip/ORIGINAL.json` `{file, sha256, duration, fps, w, h, has_speech, source_url}`. → `WORK/clip/ORIGINAL.json`
+3. **Count her day.** `python3 ~/.claude/skills/diet-analyzer/scripts/analyze.py WORK/clip/original.mp4` gives frames and a transcript. Look at the frames. Write each meal: foods, grams, which seconds of her clip show it. → `WORK/plan/meals.json` `[{meal, foods:[{name, grams, source}], clip_start, clip_end}]`
+4. **Log it in Cronometer** on Chrome (his account, one meal at a time, the day on an empty past date). Prefer database entries that carry the eight highlighted micronutrients. Whatever he has already edited in the diary is the truth and wins over yours. → `WORK/plan/cronometer_log.md` (what was entered, which numbers are soft).
+5. **Capture the cards from the Nutrition Analysis tab** after step 4, one per meal (select the meal's group, then capture the Energy Summary plus Targets panel and the Highlighted Nutrients panel) and one for the day's targets. Crop with the project copy `/Volumes/T7/OB-EDITS/2026-11-03-fdoe-batch/_work/make_cards_fdoe.py` (on the T7, read only: copy it into WORK to change it). Never redraw Cronometer's screen; faded Expenditure and Remaining rings are cropped out. Re-capture here, at the last moment before the build, so his edits in Cronometer are in. → `WORK/cards/meal_*.png`, `WORK/cards/day.png`, listed with a contact sheet `WORK/qc/cards_sheet.jpg` in `WORK/BREAKDOWN.md`.
+6. **Sync and transcribe his take.** `python3 -I ~/ob-editor/bin/sync_av.py CAM.MP4 MIC.wav --audio-only WORK/audio/mic_synced.wav`; words with `speech_words words` → `WORK/story/words.json`. Then `python3 -I ~/ob-editor/bin/lipsync_check.py scan CAM.MP4 MIC.wav T0 T1` over the take: a MOTIV skip shows here as a jump in the offset; split the sync into runs at every jump before cutting. → `WORK/story/sync.json`
+7. **Find the moment he watched her video, by sound.** `python3 -I ~/ob-editor/bin/react_window_audit.py CAM.MP4 WORK/clip/original.mp4 WORK/story/words.json WORK/qc/react NAME:CAM_START:0:CLIP_DURATION`. The window must cover her whole clip; if he paused, use one sound-matched window per piece in clip order. Open every sheet: he is facing the phone and reacting, not scratching or looking at the lens. No playback heard, or part of the clip missing from the camera file: stop and say in one sentence that his watch has to be filmed again with the clip audible. Never pick by silence or by eye. Write `WORK/qc/react_windows.json` `{"windows": [{"name", "cam_start", "clip_start", "dur", "method": "sound_match", "frame_sheet" (the sheet's path, absolute or from WORK), "reacts": true}]}`, `reacts` true only after you looked. → `WORK/qc/react_windows.json`
+8. **Cut him out with BiRefNet.** `~/OpenMontage/.venv/bin/python -I ~/ob-editor/bin/matte_hq.py PIECE.mp4 WORK/matte/NAME FPS` for the watching window and for every review piece that uses the cutout. Sheet of 8 frames over a bright colour with `frame_sheet.py`; look at hair, shoulders, hands, the mic. → `WORK/qc/matte_sheet.jpg`
+9. **Cut his lines.** Words from step 6, `zero_dead.cut_words` per line, mastered with `voice_master.py`. Every edge between words on a real pause; every line starts on its first word (check the mic level, not the transcriber's start); his lines stay in unless he marked them "cut that, Claude". Scan the cut's own transcript for "cut that", "Claude", "editor" with two recognizers (whisper and `speech_words`); expect none. Run `gaze_scan.py` (see its docstring) on his take: no piece starts or ends on a look-down. → `WORK/story/edl.json`, `WORK/audio/voice.wav`
+10. **Beat map.** For each meal, his lines (word index range) and the seconds of her footage that show it. Her footage plays forward at normal speed, never slowed, reversed, looped or held. If his review is longer than her footage of the meal, continue into the next seconds of her clip that show the same food; if there are none, the rest of that review is the main-frame shot (below). → `WORK/plan/beatmap.json`
+11. **Write the breakdown** `WORK/BREAKDOWN.md`: the order below with times; every card with its file; every shot's layout; every photo or graphic with its source and the contact sheet that shows it was looked at. Alongside, `WORK/plan/moments.json` `[{id, t, what}]` for sound effects. List the cards and graphics in `WORK/plan/plan_graphics.json`. Then `python3 -I ~/ob-editor/bin/qc_assets.py build WORK` and fill every row it lists (`subjects/graphics.md` section 8: which plan it reads, which fields); `viewed: true` only after you opened the sheet, saved as `WORK/qc/sheets/<row id>.jpg`. `qc_assets.py check WORK --route reel-fdoe` shows no FAIL. A fresh agent checks this against the layout rules before the render (it is a check, not a hold). → `WORK/BREAKDOWN.md`, `WORK/qc/assets.json`
+12. **Music and effects, pass 2 only.** `python3 -I ~/ob-editor/bin/music_pick.py WORK --route reel-fdoe --voice WORK/audio/voice.wav --tone "upbeat, bright"`, then `music_pick.py apply WORK`; `python3 -I ~/ob-editor/bin/sfx_pick.py WORK --route reel-fdoe`, which reads `plan/moments.json` and writes `WORK/story/sfx_plan.json`. See `subjects/audio.md`. → `WORK/audio/music_candidates.json`, `WORK/audio/manifest.json`, `WORK/story/sfx_plan.json`
+13. **Build** from a script kept in WORK (`WORK/build.py`, ffmpeg): see Order and layouts. Render to `WORK/out/fdoe.mp4`. Never a held frame to fill a piece: a decoder that comes up short is a bug to fix.
+14. **Prove pass 1 is untouched.** Sheet of the pass-1 span in the output beside the same times of the original (`frame_sheet.py`, 10 evenly spaced times each): same frames, same framing. The span's length equals her clip's within one frame. Her sound on that span matches the original's. → `WORK/qc/clip_span_out.jpg`, `WORK/qc/clip_span_orig.jpg`
+15. **Look at the real output.** Frame sheet of the whole reel (one frame per second) and of every layout change. Check: him on screen every frame he talks, no card on his face, no black, cards clear of the Instagram caption band, captions off his face. → `WORK/qc/final_sheet.jpg`
+16. **Gate, review, finish** as in the core (`ob_job.py gate WORK FILE`, answers in `WORK/qc/warn_answers.json`, `video-reviewer`, `ob_job.py finish`).
+
+## Order and layouts
+1. **Pass 1, her clip whole.** Frame 1 to the clip's last frame: her clip full screen, her sound, nothing added except OB's cutout bottom left (face width about 0.17 of the frame width, face top at 0.66 to 0.74 of the height, body off the bottom edge, no box, no border, feather about 1 px), silent, watching, from the step 7 window. No hook text, no caption, no view pill, no credit, no music, no sound effect. A horizontal clip sits at full width on a blurred copy of itself, never on black.
+2. **His hook line,** OB full frame at the desk, warm grade, the verdict tease or paradox as he shot it ("She eats almost 3,000 calories and maintains that lean figure, and I'll tell you how" is the shape). The music bed starts here.
+3. **The series card,** on his series line ("This is LEGIT, the series where..."): the chalkboard card with the logo slam and chalk line from `artzen-breaking-reels.md`, as moving video, him on screen in a box or cutout beside or over it while he speaks. The logo is cropped from the approved exemplar listed in gold.json (look at it first). A number on the card (a view or review count) only when it is a real, sourced number of his; otherwise no number.
+4. **Per meal, his review over her footage of that meal.** Two shots, alternating inside each meal, the calorie line (the meal's first row) always the first:
+   - **Green screen:** her footage of the meal full frame, OB's cutout bottom left at the review size, the meal's Cronometer card at the top centre. One-word captions under his chin.
+   - **Main frame:** OB full frame, her footage in a rounded 9:16 box at the top right with a white ring (whole frame, never cropped), the meal's card over his chest. Used when he looks at the lens for a longer point, when the cutout would be ragged, and for any stretch her footage runs out.
+   - Both shots show him; he is on screen every frame he talks. Her sound is muted whenever he talks, voice and music (OB 11-03: "when they are talking dont play their audio when im talking ... hally mute her ... the rest are perfect").
+   - Cuts are hard cuts on a pause or a layout change. Hooks and the first line of a meal take no cutaway. No fast flicker between her and him: at most one change of shot per line.
+5. **About 75 to 80% in, the totals:** the day card (Energy, Protein, Carbs, Fat bars) first at the top over her footage, then large over his chest with OB full frame.
+6. **The close (last 10 to 15%):** OB full frame, one fix, with the object in hand if he holds one (that line stays on him). His closing line as he shot it. The call to action lives in the caption.
+
+## Decisions that are yours
+- **Which layout.** The one above, for every FDOE. The older "screen on top, him in a glow box, head over the box edge" layout is not used: OB 11-09 allows only him over her clip, and the glow box hides her footage.
+- **Hook text on frame 1,** the counted-total opener, view pill: none. Her clip is untouched from frame 1 (the hook check is N/A on this route).
+- **Whether his numbers differ from Cronometer's.** The card shows Cronometer. Never change grams to match what he said. A real gap (more than rounding) is one clause at delivery.
+- **A card that does not fit the screen.** Resize the card, never her clip; cards stay clear of his face and above the Instagram caption band.
+- **Her music or voice under his.** Never. Pass 2 has the bed only.
+- **Music.** `music_pick.py`, three or more candidates, upbeat and bright; runner-ups in the delivery note. Sound effects tied to card and caption events, from the bank, at the route's cap.
+- **Her clip is a TikTok with her watermark or end card.** It plays whole, as posted. Pass 2 simply does not use those seconds.
+- **One file.** No intro variants, no trial packs.
+
+## Traps
+- Lips off. OB 10-30: "my lips arent synced ... on the male review ones" (a MOTIV skip). Stopped by step 6 and the gate's lip-sync check.
+- Cut off a word. OB 10-28: "you still fucking cut me off on fdoe". Stopped by step 9.
+- Him off screen. OB 10-30: "while im talking never not show me, you did full screen overlays while im speaking about the food, never do that". Both shots in step 4 show him.
+- Black. OB 10-30: "i dont like the black background ... make it more engaging and not black".
+- Her intro as a photo. OB 10-30: "make sure you are showing her intro video again at the top not just a photo". Pass 1 is her video.
+- Reaction not him watching. OB 11-01: "the fdoe eating again you didnt get me reacting, 33 seconds in is me reacting". Stopped by step 7.
+- Her voice under his. OB 11-03, above. Stopped by the mute rule.
+- Flashing between her and him. OB 10-21: "you glitched ... flashing back to her and me talking over and over, looked horrible". One shot change per line.
+- Dead air and looking away. OB 10-22: "you also keep me looking away and deadspace". Steps 9 and 15.
+- The music: a sad or default bed, or the creator's track reused. OB 11-07: "Education content should be upbeat and higher enegery". `music_pick.py` filters on tone and never reuses.
+- A text-only card or a redrawn Cronometer. Cards are captures from the real tab (step 5).
+- The old FDOE engines on the T7 write there and default to a banned track: do not run them.
+
+## Finish
+- Gate inputs: no script (declared with the reason above), pieces and camera map from the render, `story/sfx_plan.json`, `audio/manifest.json`, the cards. No recorded pieces? `subjects/qc.md`, "When the gate says there are no recorded pieces". Records: `qc/react_windows.json`, `audio/music_candidates.json`, the assets record (every card and graphic `viewed: true`, matte method `birefnet`), `qc/warn_answers.json`. Expect a WARN from her clip's own on-screen text ("What I eat in a day"): it is not his copy; answer it with what you saw.
+- Give the reviewer: the file, her clip, `WORK/BREAKDOWN.md`, `react_windows.json` with its sheets, both clip-span sheets, the card sheet, `~/ob-editor/qc/REVIEW-CHECKLIST.md`, and the gold exemplar for this format.
+- Delivery note (`ob_job.py finish --to "FDOE: <creator>"`): the file, the day total and which numbers are soft, the music with runner-ups, any gap between his spoken numbers and Cronometer as one clause.

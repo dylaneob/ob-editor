@@ -1,0 +1,48 @@
+{
+ "out": "<WORK>/blocks",
+ "w": 1242,
+ "h": 920,
+ "secs": 2.7,
+ "samples": 80,
+ "mode": "split",
+ "ht": 1.7,
+ "bw": 0.86,
+ "bd": 0.86,
+ "t_split": 0.7,
+ "t_pulse": 1.97,
+ "blocks": [
+  {
+   "key": "step1",
+   "share": 0.384,
+   "x": -0.6,
+   "title": "STEP 1",
+   "sub": "SEMAGLUTIDE",
+   "top_label": "FAT",
+   "bottom_label": "LEAN MASS",
+   "title_size": 0.215,
+   "num_size": 0.3,
+   "num_z": 0.05
+  },
+  {
+   "key": "surmount1",
+   "share": 0.25,
+   "x": 0.6,
+   "title": "SURMOUNT-1",
+   "sub": "TIRZEPATIDE",
+   "top_label": "FAT",
+   "bottom_label": "LEAN MASS",
+   "title_size": 0.175,
+   "num_size": 0.25,
+   "num_z": 0.045
+  }
+ ],
+ "cam": {
+  "lens": 50,
+  "dist": 6.0,
+  "dist_end": 5.65,
+  "height": 1.75,
+  "target_z": 0.78,
+  "orbit_deg": 4.0
+ },
+ "_source": "STEP 1: ClinicalTrials.gov NCT03548935 posted DXA results (lean 5.8 kg of 15.1 kg = 38%); SURMOUNT-1: Look et al., Diabetes Obes Metab 2025, PMID 39996356 (about 25% lean)."
+}

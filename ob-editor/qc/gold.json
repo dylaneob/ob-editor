@@ -1,0 +1,559 @@
+{
+ "_meta": {
+  "built": "2026-11-10",
+  "doc": "~/ob-editor/skill-rebuild/GOLD-SET.md",
+  "notes": [
+   "cuts_per_min/median_shot_s from ffmpeg scene detect 0.30 on 360-wide decode: layout changes only, jump cuts in one framing are missed (floor)",
+   "events_per_min, idle_pct, dead_pct, silence_pct, lufs from the QC gate reports in ~/ob-editor/qc/reports/",
+   "wpm_runtime = script words / full runtime (her clip time included)",
+   "approval grades: A explicit praise of output, B praise of mock/plan/reference, G go-ahead only, P posted without words"
+  ]
+ },
+ "formats": {
+  "scripted_level_reel": {
+   "template": "T09 2x2 + Blender level kit",
+   "grade": "A (test) + P (full)",
+   "exemplar_path": "/Volumes/T7/OB-EDITS/2026-11-05-scripts/GLP-shot/tests/GLP level test 0-18s.mp4",
+   "full_edit_path": "/Volumes/T7/OB-EDITS/2026-11-05-scripts/GLP-shot/GLP-shot full edit.mp4",
+   "approved_on": "2026-11-06",
+   "ob_words": "That's what I'm fucking talking about let's go, way better, don't just use me though make it unisex / I love it though",
+   "source": "tx fc9372ce L66469 2026-11-06T16:55Z; STATE-short-form.md L75; posted 11-06 14:28 ET",
+   "metrics": {
+    "duration_s": [
+     17.4,
+     56.6
+    ],
+    "lufs": -14.3,
+    "true_peak": [
+     -1.9,
+     -1.5
+    ],
+    "lra": [
+     1.3,
+     2.5
+    ],
+    "dead_pct": [
+     8.6,
+     10.2
+    ],
+    "silence_pct": 0.0,
+    "events_per_min": [
+     78.5,
+     82.8
+    ],
+    "idle_pct": [
+     0,
+     1
+    ],
+    "first_move_s": 0.03,
+    "cuts_per_min": [
+     13.8,
+     24.1
+    ],
+    "median_shot_s": [
+     1.6,
+     2.84
+    ],
+    "sfx_per_min": {
+     "test": 14,
+     "full": 22.3
+    },
+    "sfx_max_repeats": 3,
+    "music_db_under_voice": 16,
+    "music_extra_duck_db": 5,
+    "lipsync_worst_ms_full_only": -9
+   },
+   "bar": {
+    "events_per_min": [
+     75,
+     85
+    ],
+    "dead_pct_max": 10,
+    "move_every_s": [
+     1.0,
+     1.5
+    ],
+    "sfx_per_min": [
+     14,
+     22
+    ]
+   },
+   "reference": {
+    "name": "LEVEL-UP-BRIEF",
+    "path": "/Volumes/T7/OB-EDITS/2026-11-05-scripts/LEVEL-UP-BRIEF.md"
+   }
+  },
+  "tenten_feed": {
+   "template": "T07 Kyle panel / T09 4x4",
+   "grade": "A",
+   "exemplar_path": "/Volumes/T7/OB-EDITS/2026-10-24-tenten/finals3/OB-1010-HORMONES-FEED-VO.mp4",
+   "also": [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/finals3/OB-1010-MICROS-FEED-VO.mp4",
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/finals3/OB-1010-GUT-FEED-VO.mp4"
+   ],
+   "approved_on": "2026-10-29",
+   "ob_words": "wow so much better",
+   "source": "tx 9c9447c5 L38826 2026-10-29T12:52Z; mem feedback_feed_winner_upgrade_only.md",
+   "metrics": {
+    "duration_s": [
+     86.2,
+     115.9
+    ],
+    "lufs": [
+     -14.3,
+     -14.2
+    ],
+    "dead_pct": [
+     11.4,
+     11.6
+    ],
+    "silence_pct": [
+     1.6,
+     2.4
+    ],
+    "events_per_min": [
+     39.4,
+     45.3
+    ],
+    "idle_pct": [
+     26,
+     37
+    ],
+    "first_move_s": [
+     2.27,
+     3.04
+    ],
+    "cuts_per_min": [
+     17.1,
+     23.0
+    ],
+    "median_shot_s": [
+     2.67,
+     3.64
+    ],
+    "music": "none (voice only)"
+   },
+   "reference": {
+    "name": "Kyle panel",
+    "picture_every_s": 3.6,
+    "lands_before_word_ms": 270,
+    "music": "none",
+    "alt": {
+     "name": "Eugene Healey 2x2",
+     "change_every_s": 2.3,
+     "changes_per_min": 27,
+     "events_per_min": 58.2
+    }
+   }
+  },
+  "fdoe_breaking": {
+   "template": "T02 Artzen Breaking layout (catalog status TEST)",
+   "grade": "A",
+   "exemplar_path": "/Volumes/T7/OB-EDITS/2026-11-03-fdoe-batch/finals/C4410 FDOE review - Tamara - Breaking layout.mp4",
+   "also": [
+    "/Volumes/T7/OB-EDITS/2026-10-28-backlog/finals/C4400 FDOE review - Alex - Breaking layout (no music).mp4",
+    "/Volumes/T7/OB-EDITS/2026-10-28-backlog/finals/C4401 FDOE review - Dominique - Breaking layout (no music).mp4",
+    "/Volumes/T7/OB-EDITS/2026-11-03-fdoe-batch/finals/C4411 FDOE review - Soufiane - Breaking layout.mp4",
+    "/Volumes/T7/OB-EDITS/2026-11-03-fdoe-batch/finals/C4412 FDOE review - Dilara - Breaking layout.mp4",
+    "/Volumes/T7/OB-EDITS/2026-11-03-fdoe-batch/finals/C4413 FDOE review - Hally - Breaking layout.mp4"
+   ],
+   "approved_on": [
+    "2026-10-30",
+    "2026-11-03"
+   ],
+   "ob_words": [
+    "hell yeah love it",
+    "these are great",
+    "the rest are perfect",
+    "whatever is in the preview is perfect"
+   ],
+   "source": "mem project_backlog_edits_2026_10_28.md L159; tx 7d9fea2d L58329/L58556",
+   "metrics": {
+    "duration_s": [
+     84,
+     144
+    ],
+    "lufs": -14.1,
+    "lra": [
+     2.1,
+     3.5
+    ],
+    "dead_pct": [
+     6.1,
+     10.4
+    ],
+    "silence_pct": [
+     0.2,
+     1.3
+    ],
+    "events_per_min": [
+     67.7,
+     92.8
+    ],
+    "idle_pct": [
+     4,
+     6
+    ],
+    "first_move_s": [
+     0.03,
+     1.1
+    ],
+    "cuts_per_min": [
+     16.1,
+     23.6
+    ],
+    "median_shot_s": [
+     2.19,
+     2.27
+    ],
+    "lipsync_worst_ms": [
+     7,
+     9
+    ],
+    "wpm_runtime": [
+     183,
+     238
+    ],
+    "music_db_under_voice": 19,
+    "music_duck_while_talking_db": 4,
+    "her_voice_under_his": "never",
+    "frame1": "counted total on screen"
+   },
+   "performance": {
+    "C4400_trial": {
+     "id": "DfIRaVYCCZ9",
+     "skip_pct": 30.9,
+     "reach": 2444
+    },
+    "C4401_trial": {
+     "id": "DfIRmIHjel-",
+     "skip_pct": 22.2,
+     "reach": 1295
+    },
+    "caveat": "trials; grid audit median skip 46.2% is not comparable",
+    "source": "80-Performance/IG-FIX-2026-11-10/all-posts-since-2026-08-01.csv"
+   },
+   "reference": {
+    "name": "Artzen DfE7jMLTLSx",
+    "card": "~/ob-editor/styles/artzen-breaking-reels.md",
+    "demo_inset_s": [
+     0,
+     7.3
+    ],
+    "title_card_s": [
+     7.9,
+     10.0
+    ],
+    "total_s": 51
+   }
+  },
+  "fdoe_audit_legit": {
+   "template": "T01 (catalog LOCKED)",
+   "grade": null,
+   "exemplar_path": null,
+   "approved_on": null,
+   "ob_words": null,
+   "metrics": {},
+   "reference": {
+    "name": "OB's own 2025 audits",
+    "preset": "~/ob-editor/presets/fdoe-audit/PRESET.md",
+    "duration_s": [
+     127,
+     175
+    ],
+    "breakouts_with_layout": "20 of 20"
+   }
+  },
+  "reaction_vertical": {
+   "template": "T03",
+   "grade": "A",
+   "exemplar_path": "/Volumes/T7/OB-EDITS/2026-10-28-backlog/finals/C4380 counting calories is the worst thing for a woman - S sober.mp4",
+   "also": [
+    "/Volumes/T7/OB-EDITS/2026-10-28-backlog/finals/C4380 counting calories is the worst thing for a woman - G green screen.mp4",
+    "/Volumes/T7/OB-EDITS/2026-10-28-backlog/finals/C4380 counting calories is the worst thing for a woman - R reacting.mp4"
+   ],
+   "approved_on": "2026-10-30",
+   "ob_words": "you did very good on these (next time add image overlays)",
+   "source": "mem project_backlog_edits_2026_10_28.md L146",
+   "metrics": {
+    "duration_s": 87.6,
+    "lufs": -14.1,
+    "lra": 4.0,
+    "dead_pct": 7.8,
+    "silence_pct": 0.6,
+    "events_per_min": [
+     67.1,
+     82.9
+    ],
+    "idle_pct": [
+     8,
+     12
+    ],
+    "first_move_s": [
+     0.7,
+     0.97
+    ],
+    "wpm_runtime": 222,
+    "cuts_per_min": null
+   },
+   "reference": {
+    "name": "Karan Rajan (T15)",
+    "card": "~/ob-editor/styles/karan-rajan-doctor-react.md",
+    "wpm": [
+     214,
+     221
+    ],
+    "events_per_min": [
+     40,
+     43
+    ],
+    "card_cuts_per_min": [
+     17.9,
+     18.9
+    ],
+    "cuts_per_min": 12.4,
+    "median_shot_s": 3.4,
+    "music": "none"
+   }
+  },
+  "ugc_ads": {
+   "grade": "A",
+   "exemplar_path": "/Volumes/OB-ARCHIVE/ekko ads/OUTPUT/_masters/MASTER1_CP-R01_H21_B02_C01_47s_clean.mp4",
+   "also": [
+    "/Volumes/OB-ARCHIVE/rythm ads (client R)/OUTPUT/YR12_HOOK_everyone_said_fake.mp4 (exact approved version not verified)"
+   ],
+   "approved_on": [
+    "2026-10-27",
+    "2026-11-07"
+   ],
+   "ob_words": [
+    "its amazing",
+    "way better"
+   ],
+   "source": "mem feedback_ugc_ad_edit_rules.md L12; tx f68ec2ff L117655",
+   "metrics": {
+    "MASTER1": {
+     "duration_s": 47.3,
+     "dead_pct": 3.4,
+     "median_dead_run_s": 0.08,
+     "longest_dead_s": 0.1,
+     "wpm": 255,
+     "lufs": -14.2,
+     "lra": 1.6
+    },
+    "YR12": {
+     "duration_s": 15.6,
+     "dead_pct": 2.5,
+     "silence_pct": 0.0,
+     "events_per_min": 65.5,
+     "cuts_per_min": 30.8,
+     "median_shot_s": 2.0,
+     "lufs": -14.2
+    }
+   },
+   "reference": {
+    "name": "Haus reference ads",
+    "dead_pct": 5,
+    "median_dead_run_s": [
+     0.07,
+     0.08
+    ]
+   }
+  },
+  "longform_youtube": {
+   "grade": "A",
+   "exemplar_path": null,
+   "exemplar_note": "C4372 v3 full master not found; phone parts in /Volumes/T7/OB-EDITS/AIRDROP WE LOST THE PLOT FINAL (Oct 23)/; work /Volumes/T7/OB-EDITS/C4372-edit/",
+   "also": [
+    "/Volumes/T7/OB-EDITS/AIRDROP C4415 Women Diet Review (Nov 4)/C4415_Womens_Diet_Review.mp4",
+    "/Volumes/T7/OB-EDITS/GRAPHICS-TEST-2026-10-30/GRAPHICS TEST reta (now vs new).mp4"
+   ],
+   "approved_on": [
+    "2026-10-23",
+    "2026-10-30",
+    "2026-11-04"
+   ],
+   "ob_words": [
+    "amazing job",
+    "i like the bigger text an effects so much better",
+    "So much better wow ... moon walk as music"
+   ],
+   "source": "mem feedback_ob_youtube_edit_style.md; C4372-edit/qc/build_v3.log; QC C4415_v4",
+   "metrics": {
+    "C4372_v3": {
+     "duration_min": 41.6,
+     "cuts_per_min": 24.3,
+     "median_shot_s": 1.94,
+     "face_pct": 52,
+     "any_graphic_pct": 88,
+     "fullframe_card_pct": 53,
+     "longest_face_only_s_outside_intro_cta": 7.4,
+     "shortest_cover_between_faces_s": 1.7
+    },
+    "C4415_v4": {
+     "duration_min": 19.4,
+     "lufs": -13.6,
+     "lra": 5.6,
+     "events_per_min": 47.8,
+     "idle_pct": 15,
+     "graphics_per_min": 8,
+     "lipsync_worst_ms": -8
+    },
+    "C4398_v2": {
+     "lufs": -14.3,
+     "lra": 3.6,
+     "music_cue_db_vs_speech": -21.2,
+     "kinetic_text_px": [
+      470,
+      640
+     ]
+    }
+   },
+   "reference": {
+    "name": "Johnny Harris",
+    "card": "~/ob-editor/styles/johnny-harris.md",
+    "cuts_per_min_median": 19,
+    "cuts_per_min_range": [
+     8.5,
+     22.9
+    ],
+    "median_shot_s": 2.0,
+    "wpm": 189,
+    "music_dropouts_per_min": 1.1,
+    "alt": {
+     "name": "Markus Hunter",
+     "overlays_per_min": 6.5
+    }
+   }
+  },
+  "thumbnails": {
+   "grade": "A",
+   "exemplar_path": "/Volumes/T7/OB-EDITS/UPLOAD C4441 Love Handles (Nov 7)/Thumbnail v1 WONT FIX THIS.jpg",
+   "also": [
+    "/Volumes/T7/OB-EDITS/YT-PACKAGING-2026-11-07/breakfast/BREAKFAST_A_250cal_kitchen.png"
+   ],
+   "approved_on": [
+    "2026-11-08",
+    "2026-11-07"
+   ],
+   "ob_words": [
+    "(memory) OB approved the first render; Yes, set it",
+    "sooooo much better"
+   ],
+   "source": "mem feedback_yt_thumbnails_no_code_collage.md; tx aced2335 L20056",
+   "metrics": {
+    "size": "1280x720",
+    "words": [
+     0,
+     4
+    ],
+    "scene": "real place with depth or dark gradient + 3D",
+    "face": "real, big, expressive"
+   },
+   "reference": {
+    "own_ctr": {
+     "shirt_lift_abs": 7.5,
+     "before_after_1200cal": 7.1,
+     "face_at_desk": [
+      1.2,
+      2.7
+     ],
+     "SALT_SCAM_pct_on_117k": 4.5
+    },
+    "outlier_study_11_07": {
+     "real_place_pct": 60,
+     "dark_gradient_3d_pct": 25,
+     "illustrated_pct": 10,
+     "flat_colour": "1 of 31"
+    }
+   }
+  },
+  "workshop_ad_talking": {
+   "template": "tmpl.py talking ad: his full frame every frame, IG-native Inter captions (y 1205), overlay cards on his chest y 845-1165, title alone on the hook, CTA y 1100",
+   "grade": "A",
+   "exemplar_path": "/Volumes/OB-ARCHIVE/OB-EDITS/AIRDROP Workshop ad 4 style sample, talking version (V10) (2026-11-11)/AD04-SMALLER-STRONGER-TH-V10_261110_mix.mp4",
+   "approved_on": "2026-11-11",
+   "ob_words": "love that",
+   "source": "this session (tx e82ff02b), 2026-11-11, OB's reply after the 720p phone copy was sent; then: 'now let me see 2x2 then you can edit and render all 20 ads in btoh formats'",
+   "what_he_liked": "the talking style sample as a whole: no cutaways (he stays on screen), Instagram-native white sentence-case captions (no bubbles), real stock clips of women 25-60 doing strength work matched to each line, a bar-chart study card (STEP 1 45%, SURMOUNT-1 25% lean mass), client before|after pairs (Nicole on the story, pf pairs on the proof line), dead space cut, upbeat Mixkit bed 27 LU under him, no sound effects",
+   "metrics": {
+    "duration_s": 59.7,
+    "lufs": -14.0,
+    "cards": 23,
+    "video_cards": 15,
+    "sfx_per_min": 0,
+    "bed_lu_under_voice": 27
+   },
+   "spec": "/Volumes/OB-ARCHIVE/AD-MAKER/batches/2026-11-10-coaching-workshop-ads/STYLE-SPEC.md",
+   "builder": "/Volumes/OB-ARCHIVE/AD-MAKER/batches/2026-11-10-coaching-workshop-ads/work/ad04/build_ad04.py"
+  }
+ },
+ "no_approved_exemplar": {
+  "T04_dylan_page_split": {
+   "reference_card": "~/ob-editor/styles/dylan-page-split.md",
+   "receipts_share_pct": [
+    24,
+    31
+   ],
+   "seam_y": 876
+  },
+  "T06_kallaway_canvas": {
+   "reference_card": "~/ob-editor/styles/framework-canvas.md",
+   "note": "reference praised, no edit praised"
+  },
+  "T08_megann": {
+   "reference_card": "~/ob-editor/styles/megann-numbered-plan.md",
+   "note": "the Megann copy on the 10/10 feed was hated"
+  },
+  "T10_lecture": {},
+  "T11_tier_list": {},
+  "T13_follow_pitch": {},
+  "T14_mekhi_steps": {},
+  "T12_yt_clips": {
+   "reference_card": "~/ob-editor/styles/rico-appetizer-clips.md",
+   "cuts_per_min": 11.2,
+   "wpm": 248,
+   "events_per_min": 43.5,
+   "idle_pct": 10
+  },
+  "T15_karan": {
+   "events_per_min": 40,
+   "card_cuts_per_min": 17.9
+  },
+  "T16_squat_u": {},
+  "T17_trainbloom": {
+   "wpm": 214,
+   "board_share_pct": 64,
+   "element_every_s": 1.2,
+   "sfx_per_min": [
+    28,
+    40
+   ]
+  },
+  "T18_T20": {},
+  "T21_sarah_snow": {
+   "note": "script praised (11-06), not an edit"
+  },
+  "T22_T24_hormozi": {},
+  "T25_michael_read": {},
+  "T26_drew": {
+   "music_db": -11,
+   "note": "look kept by OB 11-07, no finished edit approved"
+  },
+  "longform_reaction": {
+   "note": "C4407, C4423, C4424, C4441 videos: no praise of the edit found"
+  }
+ },
+ "contradictions": [
+  "feed reels approved voice-only (10/10, FDOE trials) vs 11-06 every edit gets a music bed and M58 real music first",
+  "SFX house rule 3-4/min (M17) vs approved GLP ~14-22/min and E v2 ~23/min",
+  "no-AI-imagery rule vs approved AI-rendered thumbnails (C4441 ChatGPT, Breakfast Canva); approved 10/10 + FDOE used AI-labelled Pixabay 'Lofi Soul' (M30)",
+  "move every 1-1.5 s / motion gate vs approved 10/10 feeds idle 26-37%, first move 2.3-3.0 s",
+  "zero dead space vs approved 10/10 feeds 11.4-11.6% dead, FDOEs up to 10.4%",
+  "T02 Breaking layout marked TEST while every approved FDOE uses it; T01 LOCKED has no approved editor exemplar",
+  "no boxed text vs 'Keep Drew's look' (banner boxes, box captions)",
+  "approval gates (Step 1.5, A-D music pick, one thumbnail before batching) vs 11-09 no-gates order",
+  "approved C4401 v3 fails the gate on edges (music copy); C4372 v4 plan approved but pace check FAIL",
+  "long-form face 40% floor / chain-of-3 set from notes, not an approved number (C4367 25% face)"
+ ]
+}

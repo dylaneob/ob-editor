@@ -1,0 +1,493 @@
+[
+ {
+  "file": "clean.mp4",
+  "guards": "no false alarms on a clean clip: whole lines, zero dead space, cut on word edges",
+  "must_pass": [
+   "format",
+   "cues",
+   "silence",
+   "audio",
+   "motion",
+   "text_face",
+   "text_lint"
+  ],
+  "segs": [
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4376_mic.wav",
+    337.5038,
+    338.8385
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4376_mic.wav",
+    338.9386,
+    340.1398
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4376_mic.wav",
+    348.0477,
+    352.2185
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4376_mic.wav",
+    356.4561,
+    357.8575
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4376_mic.wav",
+    362.1284,
+    365.6987
+   ]
+  ],
+  "must_status": {
+   "edges": "PASS"
+  }
+ },
+ {
+  "file": "flash.mp4",
+  "guards": "M09 one-frame flashes",
+  "must_fail": [
+   "motion"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "silence",
+   "audio"
+  ]
+ },
+ {
+  "file": "clipped.mp4",
+  "guards": "M06 hard-clipped voice",
+  "must_fail": [
+   "audio"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "silence",
+   "motion"
+  ]
+ },
+ {
+  "file": "cue.mp4",
+  "guards": "M03 'cut that, Claude' left in",
+  "must_fail": [
+   "cues"
+  ],
+  "skip": [
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "silence",
+   "motion",
+   "audio"
+  ]
+ },
+ {
+  "file": "gap.mp4",
+  "guards": "M01 dead space",
+  "must_fail": [
+   "silence"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "motion",
+   "audio"
+  ]
+ },
+ {
+  "file": "face.mp4",
+  "guards": "M05 text over his face",
+  "must_fail": [
+   "text_face"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "silence",
+   "motion",
+   "audio"
+  ]
+ },
+ {
+  "file": "dash.mp4",
+  "guards": "M11 em dash on screen",
+  "must_fail": [
+   "text_lint"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "silence",
+   "motion",
+   "audio"
+  ]
+ },
+ {
+  "file": "square.mp4",
+  "guards": "M08 square instead of 9:16",
+  "must_fail": [
+   "format"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "silence",
+   "motion",
+   "audio"
+  ]
+ },
+ {
+  "file": "cap_clean.mp4",
+  "guards": "captions that match his words raise nothing",
+  "must_status": {
+   "captions": "PASS"
+  },
+  "skip": [
+   "words",
+   "silence",
+   "motion",
+   "audio"
+  ]
+ },
+ {
+  "file": "cap_wrong.mp4",
+  "guards": "M25 a caption he never said",
+  "must_warn": [
+   "captions"
+  ],
+  "skip": [
+   "words",
+   "silence",
+   "motion",
+   "audio"
+  ]
+ },
+ {
+  "file": "midword_start.mp4",
+  "guards": "M26 a file that starts mid-word",
+  "must_fail": [
+   "edges"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "captions",
+   "silence",
+   "motion",
+   "audio"
+  ]
+ },
+ {
+  "file": "midword_end.mp4",
+  "guards": "M26 a file that ends mid-word (the posted C4378 hooks end on 'follow')",
+  "must_fail": [
+   "edges"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "captions",
+   "silence",
+   "motion",
+   "audio"
+  ]
+ },
+ {
+  "file": "midword_join.mp4",
+  "guards": "M26 a splice inside a word (the 10-28 counter mock)",
+  "must_fail": [
+   "edges"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "captions",
+   "silence",
+   "motion",
+   "audio"
+  ],
+  "segs": [
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4376_mic.wav",
+    337.5038,
+    338.8385
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4376_mic.wav",
+    338.9386,
+    340.1398
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4376_mic.wav",
+    348.14269999999993,
+    352.2185
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4376_mic.wav",
+    356.4561,
+    357.8575
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4376_mic.wav",
+    362.1284,
+    365.6987
+   ]
+  ]
+ },
+ {
+  "file": "midsentence_end.mp4",
+  "guards": "M26 a clip that ends mid-sentence at a pause (the FDOE mock: '...gut health | and high protein')",
+  "must_fail": [
+   "edges"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "captions",
+   "silence",
+   "motion",
+   "audio"
+  ],
+  "segs": [
+   [
+    "/Volumes/T7/OB-EDITS/AIRDROP C4378 FULL DAY OF EATING (Oct 25)/1B hook 1 (pay attention) + reaction.mp4",
+    38.0,
+    41.81
+   ]
+  ]
+ },
+ {
+  "file": "inherited_unknown.mp4",
+  "guards": "M27 the counter mock's source: a clip of the posted FDOE, whose own cuts were never recorded (and clipped him): must fail",
+  "must_fail": [
+   "edges"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "captions",
+   "silence",
+   "motion",
+   "audio"
+  ],
+  "segs": [
+   [
+    "/Volumes/T7/OB-EDITS/AIRDROP C4378 FULL DAY OF EATING (Oct 25)/1B hook 1 (pay attention) + reaction.mp4",
+    38.0,
+    46.52
+   ]
+  ]
+ },
+ {
+  "file": "valley_end.mp4",
+  "guards": "M27 a line that ends at the dip before a discarded word said in the same breath ('...start the day. | Research shows'): no pause exists, the cut is clean",
+  "must_status": {
+   "edges": "PASS"
+  },
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "captions",
+   "silence",
+   "motion",
+   "audio"
+  ],
+  "segs": [
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4378_mic.wav",
+    76.176,
+    77.744
+   ]
+  ]
+ },
+ {
+  "file": "closure_start.mp4",
+  "guards": "M27 a piece that starts after a soft first syllable, at the stop inside the word ('Tri|ple whammy', heard as 'Purple whammy')",
+  "must_fail": [
+   "edges"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "captions",
+   "silence",
+   "motion",
+   "audio"
+  ],
+  "segs": [
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4378_mic.wav",
+    133.433,
+    134.835
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4378_mic.wav",
+    134.835,
+    138.505
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4378_mic.wav",
+    138.805,
+    139.573
+   ]
+  ]
+ },
+ {
+  "file": "closure_ok.mp4",
+  "guards": "the same line with the whole 'Triple' (zero_dead's onset bridges the closure)",
+  "must_status": {
+   "edges": "PASS"
+  },
+  "skip": [
+   "cues",
+   "words",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "captions",
+   "silence",
+   "motion",
+   "audio"
+  ],
+  "segs": [
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4378_mic.wav",
+    133.433,
+    134.835
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4378_mic.wav",
+    134.835,
+    138.505
+   ],
+   [
+    "/Volumes/T7/OB-EDITS/2026-10-24-tenten/_work/C4378_mic.wav",
+    138.672,
+    139.573
+   ]
+  ]
+ },
+ {
+  "file": "chapter_card_long.mp4",
+  "guards": "C4395 (10-28): a full-screen chapter card in long-form (C4395 84-94 s, CH2 at 4.86-7.23 s). Sampled every 2 s, the gate borrowed his face from the shots around each card and failed text_face on all 15 cards; with the edit's cover spans it must not",
+  "long": true,
+  "every": 2.0,
+  "cards": [
+   [
+    4.86,
+    7.23
+   ]
+  ],
+  "must_pass": [
+   "text_face",
+   "opener"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "silence",
+   "edges",
+   "audio",
+   "motion",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "captions"
+  ]
+ },
+ {
+  "file": "word_ok.mp4",
+  "script": "word_ok.txt",
+  "must_pass": [
+   "words"
+  ],
+  "note": "10-29: the full-file pass once heard 'you only need' as 'donate'; the 5 s window re-check must not fail a clip that has every word"
+ },
+ {
+  "file": "word_cut.mp4",
+  "script": "word_cut.txt",
+  "must_fail": [
+   "words"
+  ],
+  "note": "10-29: 'you only' spliced out; the window re-check must still FAIL a word the cut really took"
+ },
+ {
+  "file": "opener_stock.mp4",
+  "guards": "M35 (10-30): C4402 pass 3's first 8 s, which opened on stock (H01 reel 0-3.25 s, then the G000 glance cover to 6.01 s) with no OB face until 0:06. With pass 3's cover spans the opener check must FAIL",
+  "long": true,
+  "cards": [
+   [
+    0.0,
+    3.25
+   ],
+   [
+    3.25,
+    6.006
+   ]
+  ],
+  "must_fail": [
+   "opener"
+  ],
+  "skip": [
+   "cues",
+   "words",
+   "silence",
+   "edges",
+   "audio",
+   "motion",
+   "text_face",
+   "text_lint",
+   "text_safe",
+   "hook",
+   "captions"
+  ]
+ }
+]
